@@ -1,0 +1,22 @@
+{
+  "name": "code_book_server",
+  "version": "1.0.0",
+  "description": "Server for WRLDC Web Code Book Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sudhir",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.0-rc.5",
+    "express": "^4.13.4",
+    "morgan": "^1.7.0",
+    "mysql": "^2.10.2",
+	"ejs": "latest"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}
