@@ -13,6 +13,12 @@ app.use(morgan('dev'));
 
 app.set('json spaces', 1);
 
+app.use('/api/categories', require('./project/controllers/category'));
+app.use('/api/rldcs', require('./project/controllers/rldc'));
+app.use('/api/entities', require('./project/controllers/entity'));
+app.use('/api/regions', require('./project/controllers/region'));
+app.use('/api/associates', require('./project/controllers/associate'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
