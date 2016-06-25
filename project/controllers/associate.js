@@ -12,7 +12,8 @@ router.get('/', function (req, res) {
 });
 
 router.get('/getByElement', function (req, res) {
-    Associate.getByElement(req.params.element_id, function (err, rows) {
+    //console.log("Associate controller getByElement function route element_id query param is "+req.query.element_id);
+    Associate.getByElement(req.query.element_id, function (err, rows) {
         if (err) {
             res.send({'Error': err});
         }
