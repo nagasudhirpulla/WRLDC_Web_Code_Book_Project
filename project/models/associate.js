@@ -9,7 +9,7 @@ exports.getAll = function (done) {
 };
 
 exports.getByElement = function (element_id, done) {
-    db.get().query(SQLHelper.createSQLGetString('associates', ['id', 'entity_id'], ['element_id'], ['=']), [element_id], function (err, rows) {
+    db.get().query(SQLHelper.createSQLGetString('associates', ['*'], ['element_id'], ['=']), [element_id], function (err, rows) {
         if (err) return done(err);
         done(null, rows);
     })
