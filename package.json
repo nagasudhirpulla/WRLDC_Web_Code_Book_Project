@@ -13,7 +13,8 @@
     "express": "^4.13.4",
     "morgan": "^1.7.0",
     "mysql": "^2.10.2",
-	"ejs": "latest"
+	"ejs": "latest",
+    "body-parser" : "latest"
   },
   "devDependencies": {
     "chai": "^3.5.0",

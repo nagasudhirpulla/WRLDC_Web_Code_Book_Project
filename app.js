@@ -1,9 +1,16 @@
 var db = require('./project/db');
 var express = require('express');
 var morgan = require('morgan');
-
+var bodyParser = require('body-parser');
+cors = require('./project/cors');
 var app = express();
 var port = process.env.PORT || 3000;
+
+app.use(cors());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 app.use(express.static(__dirname + '/project/views'));
 app.set('views', __dirname + '/project/views');
@@ -18,6 +25,7 @@ app.use('/api/rldcs', require('./project/controllers/rldc'));
 app.use('/api/entities', require('./project/controllers/entity'));
 app.use('/api/regions', require('./project/controllers/region'));
 app.use('/api/associates', require('./project/controllers/associate'));
+app.use('/api/codes', require('./project/controllers/code'));
 app.use('/', require('./project/controllers/general'));
 
 

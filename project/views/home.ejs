@@ -1,60 +1,99 @@
 <!doctype html>
 <html>
 <head>
+    <script src="libs/jquery-3.0.0.min.js"></script>
+    <script src="libs/chosen.jquery.min.js"></script>
+    <!--<script src="example.js"></script>-->
+    <link href="libs/toastr.min.css" rel="stylesheet"/>
+    <script src="libs/toastr.min.js"></script>
+    <script src="libs/custom/utils.js"></script>
+    <script src="home.js"></script>
     <link rel="stylesheet" type="text/css" href="./home.css">
+    <link rel="stylesheet" href="libs/chosen.min.css">
 </head>
 <body>
-<h1>Web Code Book</h1>
+<div style="border: 1px solid darkslategray; padding: 10px">
+    <h1>Web Code Book</h1>
 
-<div style="width: 100%;text-align:center">
-    <div class="code_creation_div" style="display: inline-block;text-align:left">
-        <div class="code_create_div_column_float_left">
-            <table>
-                <tr>
-                    <td><span>NL - </span>
-                    <td><input type="text" class="nl_code"></td>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span>NR - </span>
-                    <td><input type="text" class="nr_code"></td>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span>ER - </span>
-                    <td><input type="text" class="er_code"></td>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span>SR - </span>
-                    <td><input type="text" class="sr_code"></td>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span>NER - </span>
-                    <td><input type="text" class="ner_code"></td>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <select name="category" id="category_select" class="code_create_div_column_float_left">
-            <option value="">Other</option>
-        </select>
+    <div style="width: 100%;text-align:center">
+        <div class="code_creation_div" style="display: inline-block;text-align:left">
+            <div class="code_create_div_column_float_left">
+                <table>
+                    <tr>
+                        <td><span>NL - </span>
+                        <td><input type="text" class="nl_code"></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>NR - </span>
+                        <td><input type="text" class="nr_code"></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>ER - </span>
+                        <td><input type="text" class="er_code"></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>SR - </span>
+                        <td><input type="text" class="sr_code"></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>NER - </span>
+                        <td><input type="text" class="ner_code"></td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="code_create_div_column_float_left">
+                <span>Category</span><br><br>
+                <select name="category" id="category_select">
+                    <option value="">Other</option>
+                </select>
+            </div>
 
-        <div id="element_selector_div" class="code_create_div_column_float_left">
-            <button id="element_selector_button">Element Selector</button>
+
+            <div id="element_selector_div" class="code_create_div_column_float_left">
+                <button id="element_selector_button">Element Selector</button>
+                <br><br>
+                <span>Requested By</span><br>
+                <select data-placeholder="Add requesting Entities..." name="request_entities_select" id="request_entities_select" class="chosen-select" multiple style="width:350px;">
+                    <option value="">Maharashtra</option>
+                    <option value="">ghjghj</option>
+                    <option value="">kjhjkhkjhk</option>
+                </select>
+            </div>
+            <input type="text" placeholder="Code Description" class="code_create_div_column_float_left">
+            <button id="get_code_button" class="code_create_div_column_float_left" onclick="createCode()">Get Code
+            </button>
             <br>
-            <ul style="list-style-type:none;padding-left: 0px">
-                <li><input type="checkbox" name="" id="">Maharashtra</li>
-                <li><input type="checkbox" name="" id="">Gujarat</li>
-                <li><input type="checkbox" name="" id="">Chhattisgarh</li>
-            </ul>
-            <button id="other_entity_button">Other Entity</button>
-        </div>
-        <input type="text" placeholder="Code Description" class="code_create_div_column_float_left">
-        <button id="get_code_button" class="code_create_div_column_float_left">Get Code</button>
-        <br>
 
+        </div>
+    </div>
+</div>
+<br>
+
+<div style="border: 1px solid darkslategray;padding: 10px">
+    <h1>Entity Selector</h1>
+
+    <div style="width: 100%;text-align:center">
+        <div class="entity_selector_div" style="display: inline-block;text-align:left">
+            <button class="entity_selector_div_column_float_left" id="clear_entity_checks_button">Clear Checkboxes
+            </button>
+
+            <div id="entity_selector_div" class="entity_selector_div_column_float_left">
+                <ul class="scrollable_ul" style="height: 100px" id="entity_selector">
+                    <li><input type="checkbox" name="" id="">Maharashtra</li>
+                    <li><input type="checkbox" name="" id="">Gujarat</li>
+                    <li><input type="checkbox" name="" id="">Chhattisgarh</li>
+                </ul>
+            </div>
+
+            <button id="commit_entity_checks_button" class="entity_selector_div_column_float_left">Commit Changes
+            </button>
+
+        </div>
     </div>
 </div>
 </body>
