@@ -23,7 +23,7 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 function onDomComplete() {
-    $(".chosen-select").chosen();
+    $(".chosen-select").chosen({enable_split_word_search:true,search_contains:true});
     $.ajax({
         //fetch categories from sever
         url: "http://localhost:3000/api/categories/",
