@@ -5,7 +5,7 @@ var morgan = require('morgan');
 var app = express();
 var port = process.env.PORT || 3000;
 
-//app.use(express.static(__dirname + '/project/views'));
+app.use(express.static(__dirname + '/project/views'));
 app.set('views', __dirname + '/project/views');
 app.set('view engine', 'ejs');
 
@@ -18,6 +18,8 @@ app.use('/api/rldcs', require('./project/controllers/rldc'));
 app.use('/api/entities', require('./project/controllers/entity'));
 app.use('/api/regions', require('./project/controllers/region'));
 app.use('/api/associates', require('./project/controllers/associate'));
+app.use('/', require('./project/controllers/general'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

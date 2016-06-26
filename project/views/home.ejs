@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="./home.css">
+</head>
+<body>
+<h1>Web Code Book</h1>
+
+<div style="width: 100%;text-align:center">
+    <div class="code_creation_div" style="display: inline-block;text-align:left">
+        <div class="code_create_div_column_float_left">
+            <table>
+                <tr>
+                    <td><span>NL - </span>
+                    <td><input type="text" class="nl_code"></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>NR - </span>
+                    <td><input type="text" class="nr_code"></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>ER - </span>
+                    <td><input type="text" class="er_code"></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>SR - </span>
+                    <td><input type="text" class="sr_code"></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>NER - </span>
+                    <td><input type="text" class="ner_code"></td>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <select name="category" id="category_select" class="code_create_div_column_float_left">
+            <option value="">Other</option>
+        </select>
+
+        <div id="element_selector_div" class="code_create_div_column_float_left">
+            <button id="element_selector_button">Element Selector</button>
+            <br>
+            <ul style="list-style-type:none;padding-left: 0px">
+                <li><input type="checkbox" name="" id="">Maharashtra</li>
+                <li><input type="checkbox" name="" id="">Gujarat</li>
+                <li><input type="checkbox" name="" id="">Chhattisgarh</li>
+            </ul>
+            <button id="other_entity_button">Other Entity</button>
+        </div>
+        <input type="text" placeholder="Code Description" class="code_create_div_column_float_left">
+        <button id="get_code_button" class="code_create_div_column_float_left">Get Code</button>
+        <br>
+
+    </div>
+</div>
+</body>
+</html>
