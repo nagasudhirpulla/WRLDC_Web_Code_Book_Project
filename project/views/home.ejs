@@ -21,27 +21,27 @@
                 <table>
                     <tr>
                         <td><span>NL - </span>
-                        <td><input type="text" class="nl_code"></td>
+                        <td><input type="text" id="nl_code"></td>
                         </td>
                     </tr>
                     <tr>
                         <td><span>NR - </span>
-                        <td><input type="text" class="nr_code"></td>
+                        <td><input type="text" id="nr_code"></td>
                         </td>
                     </tr>
                     <tr>
                         <td><span>ER - </span>
-                        <td><input type="text" class="er_code"></td>
+                        <td><input type="text" id="er_code"></td>
                         </td>
                     </tr>
                     <tr>
                         <td><span>SR - </span>
-                        <td><input type="text" class="sr_code"></td>
+                        <td><input type="text" id="sr_code"></td>
                         </td>
                     </tr>
                     <tr>
                         <td><span>NER - </span>
-                        <td><input type="text" class="ner_code"></td>
+                        <td><input type="text" id="ner_code"></td>
                         </td>
                     </tr>
                 </table>
@@ -58,13 +58,15 @@
                 <button id="element_selector_button">Element Selector</button>
                 <br><br>
                 <span>Requested By</span><br>
-                <select data-placeholder="Add requesting Entities..." name="request_entities_select" id="request_entities_select" class="chosen-select" multiple style="width:350px;">
+                <select data-placeholder="Add requesting Entities..." name="request_entities_select"
+                        id="request_entities_select" class="chosen-select" multiple style="width:350px;">
                     <option value="">Maharashtra</option>
                     <option value="">ghjghj</option>
                     <option value="">kjhjkhkjhk</option>
                 </select>
             </div>
-            <input type="text" placeholder="Code Description" class="code_create_div_column_float_left">
+            <input type="text" id="code_description_input" placeholder="Code Description"
+                   class="code_create_div_column_float_left">
             <button id="get_code_button" class="code_create_div_column_float_left" onclick="createCode()">Get Code
             </button>
             <br>

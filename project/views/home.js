@@ -1,3 +1,4 @@
+var mRldcIdsArray = [];
 document.onreadystatechange = function () {
     if (document.readyState == "interactive") {
 
@@ -23,7 +24,7 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 function onDomComplete() {
-    $(".chosen-select").chosen({enable_split_word_search:true,search_contains:true});
+    $(".chosen-select").chosen({enable_split_word_search: true, search_contains: true});
     $.ajax({
         //fetch categories from sever
         url: "http://localhost:3000/api/categories/",
@@ -71,6 +72,10 @@ function onDomComplete() {
     });
 }
 
+function fillRldcsList(rldcsArray) {
+    mRldcIdsArray = rldcsArray;
+}
+
 function fillCategoriesList(catsArray) {
     var catSelectEl = document.getElementById("category_select");
     removeOptions(catSelectEl);
@@ -110,15 +115,126 @@ function fillEntitiesList(entsArray) {
 }
 
 function createCode() {
+    var isOtherCodesRequired = true;
+    if (!confirm("********** Create the code ??? **********")) {
+        return;
+    }
+    var desc = document.getElementById("code_description_input").value;
+    var cat_sel = document.getElementById("category_select");
+    var cat_id = cat_sel.options[cat_sel.selectedIndex].value;
+    var request_entities_ids_array = $("#request_entities_select").val();
+    var nl_code = document.getElementById("nl_code").value;
+    var nr_code = document.getElementById("nr_code").value;
+    var er_code = document.getElementById("er_code").value;
+    var sr_code = document.getElementById("sr_code").value;
+    var ner_code = document.getElementById("ner_code").value;
+    if (nl_code.trim() == "" && nr_code.trim() == "" && er_code.trim() == "" && sr_code.trim() == "" && ner_code.trim() == "") {
+        isOtherCodesRequired = false;
+    }
     $.ajax({
         //create code through post request
         url: "http://localhost:3000/api/codes/",
         type: "POST",
-        data: {desc: "I am Sudhir"},
+        data: {desc: desc, cat: cat_id, elem_id: null, req_array: request_entities_ids_array},
         dataType: "json",
         success: function (data) {
-            toastr["info"]("Response is " + JSON.stringify(data.msg));
-            //alert("Response is " + JSON.stringify(data));
+            //console.log(data);
+            if (data["Error"]) {
+                toastr["warning"]("Code couldn't be inserted\nTry Again... ");
+                console.log("Code couldn't be inserted, Error: " + JSON.stringify(data.Error));
+            } else {
+                toastr["success"]("The code issued is " + JSON.stringify(data.new_code));
+                console.log("The code issued is " + JSON.stringify(data.new_code));
+                if (isOtherCodesRequired) {
+                    createOtherCodes(data.new_code, nl_code, nr_code, er_code, sr_code, ner_code);
+                }
+                if (request_entities_ids_array.length > 0) {
+                    createRequestingEntities(data.new_code, request_entities_ids_array);
+                }
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
+
+function createOtherCodes(main_code, nl_code, nr_code, er_code, sr_code, ner_code) {
+    //mRldcIdsArray
+    var mainCodesArray = [];
+    var rldcsIdsArray = [];
+    var otherCodesArray = [];
+    for (var i = 0; i < mRldcIdsArray.length; i++) {
+        if (mRldcIdsArray[i].name == "NLDC") {
+            mainCodesArray.push(main_code);
+            rldcsIdsArray.push(mRldcIdsArray[i].id);
+            otherCodesArray.push(nl_code);
+        } else if (mRldcIdsArray[i].name == "NRLDC") {
+            mainCodesArray.push(main_code);
+            rldcsIdsArray.push(mRldcIdsArray[i].id);
+            otherCodesArray.push(nr_code);
+        } else if (mRldcIdsArray[i].name == "SRLDC") {
+            mainCodesArray.push(main_code);
+            rldcsIdsArray.push(mRldcIdsArray[i].id);
+            otherCodesArray.push(sr_code);
+        } else if (mRldcIdsArray[i].name == "ERLDC") {
+            mainCodesArray.push(main_code);
+            rldcsIdsArray.push(mRldcIdsArray[i].id);
+            otherCodesArray.push(er_code);
+        } else if (mRldcIdsArray[i].name == "NERLDC") {
+            mainCodesArray.push(main_code);
+            rldcsIdsArray.push(mRldcIdsArray[i].id);
+            otherCodesArray.push(ner_code);
+        }
+    }
+    var values = {codes: otherCodesArray, rldc_ids: rldcsIdsArray, code_ids: mainCodesArray};//[main_code_id, rldc_id,optional_code];
+    console.log("Other RLDCs insertion values array is " + JSON.stringify(values));
+    $.ajax({
+        //create code through post request
+        url: "http://localhost:3000/api/optional_codes/",
+        type: "POST",
+        data: {values: values},
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            if (data["Error"]) {
+                toastr["warning"]("Other RLDC codes couldn't be inserted\nTry Again... ");
+                console.log("Other RLDC codes couldn't be inserted, Error: " + JSON.stringify(data.Error));
+            } else {
+                toastr["success"](data.numOtherCodes + " Other RLDC codes inserted");
+                console.log(data.numOtherCodes + " Other RLDC codes inserted");
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
+
+function createRequestingEntities(main_code, request_entities_ids_array) {
+    var mainCodesArray = [];
+    for (var i = 0; i < request_entities_ids_array.length; i++) {
+        mainCodesArray.push(main_code);
+    }
+    var values = {code_ids: mainCodesArray, entity_ids: request_entities_ids_array};//[main_code_id, requesting_entity_id]
+    console.log("Requesting entities insertion values array is " + JSON.stringify(values));
+    $.ajax({
+        //create code through post request
+        url: "http://localhost:3000/api/code_requests/",
+        type: "POST",
+        data: {values: values},
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            if (data["Error"]) {
+                toastr["warning"]("Requesting Entities couldn't be inserted\nTry Again... ");
+                console.log("Requesting Entities couldn't be inserted, Error: " + JSON.stringify(data.Error));
+            } else {
+                toastr["success"](data.numRequesting + " Requesting Entities inserted");
+                console.log(data.numRequesting + " Requesting Entities inserted");
+            }
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);

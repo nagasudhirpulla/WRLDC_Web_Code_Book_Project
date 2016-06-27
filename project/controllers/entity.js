@@ -5,7 +5,7 @@ var Entity = require('../models/entity.js');
 router.get('/', function (req, res) {
     Entity.getAll(function (err, rows) {
         if (err) {
-            res.send({'Error': err});
+            res.json({'Error': err});
         }
         res.json({'entities': rows});
     });
