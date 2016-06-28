@@ -166,23 +166,23 @@ function createOtherCodes(main_code, nl_code, nr_code, er_code, sr_code, ner_cod
     var rldcsIdsArray = [];
     var otherCodesArray = [];
     for (var i = 0; i < mRldcIdsArray.length; i++) {
-        if (mRldcIdsArray[i].name == "NLDC") {
+        if (mRldcIdsArray[i].name == "NLDC" && nl_code.trim().length != 0) {
             mainCodesArray.push(main_code);
             rldcsIdsArray.push(mRldcIdsArray[i].id);
             otherCodesArray.push(nl_code);
-        } else if (mRldcIdsArray[i].name == "NRLDC") {
+        } else if (mRldcIdsArray[i].name == "NRLDC" && nr_code.trim().length != 0) {
             mainCodesArray.push(main_code);
             rldcsIdsArray.push(mRldcIdsArray[i].id);
             otherCodesArray.push(nr_code);
-        } else if (mRldcIdsArray[i].name == "SRLDC") {
+        } else if (mRldcIdsArray[i].name == "SRLDC" && sr_code.trim().length != 0) {
             mainCodesArray.push(main_code);
             rldcsIdsArray.push(mRldcIdsArray[i].id);
             otherCodesArray.push(sr_code);
-        } else if (mRldcIdsArray[i].name == "ERLDC") {
+        } else if (mRldcIdsArray[i].name == "ERLDC" && er_code.trim().length != 0) {
             mainCodesArray.push(main_code);
             rldcsIdsArray.push(mRldcIdsArray[i].id);
             otherCodesArray.push(er_code);
-        } else if (mRldcIdsArray[i].name == "NERLDC") {
+        } else if (mRldcIdsArray[i].name == "NERLDC" && ner_code.trim().length != 0) {
             mainCodesArray.push(main_code);
             rldcsIdsArray.push(mRldcIdsArray[i].id);
             otherCodesArray.push(ner_code);
