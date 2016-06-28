@@ -3,9 +3,9 @@ var SQLHelper = require('../helpers/sqlHelper');
 
 exports.create = function (code_ids, rldc_ids, codes, done) {
     if (!(code_ids.constructor === Array)) {
-        code_ids = [code_ids];
-        rldc_ids = [rldc_ids];
-        codes = [codes];
+        code_ids = [[code_ids]];
+        rldc_ids = [[rldc_ids]];
+        codes = [[codes]];
     }
     var tableName = "optional_codes";
     var argNames = ["code_id", "rldc_id", "code"];
