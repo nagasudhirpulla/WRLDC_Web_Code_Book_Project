@@ -76,7 +76,7 @@
 </div>
 <br>
 
-<div style="border: 1px solid darkslategray;padding: 10px">
+<div style="border: 1px solid darkslategray;padding: 10px;display:none">
     <h1>Entity Selector</h1>
 
     <div style="width: 100%;text-align:center">
@@ -95,6 +95,67 @@
             <button id="commit_entity_checks_button" class="entity_selector_div_column_float_left">Commit Changes
             </button>
 
+        </div>
+    </div>
+</div>
+
+<div style="border: 1px solid darkslategray;padding: 10px">
+    <h1>Edit Code <span id="code_edit_span">xyz</span></h1>
+
+    <div style="width: 100%;text-align:center">
+        <div class="code_creation_div" style="display: inline-block;text-align:left">
+            <div class="code_create_div_column_float_left">
+                <input type="checkbox" value="CancelCode"
+                       id="is_cancelled_edit_chkbox"> <span>CancelCode</span>
+            </div>
+            <div class="code_create_div_column_float_left">
+                <table>
+                    <tr>
+                        <td><span>NL - </span>
+                        <td><input type="text" id="nl_code_edit"></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>NR - </span>
+                        <td><input type="text" id="nr_code_edit"></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>ER - </span>
+                        <td><input type="text" id="er_code_edit"></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>SR - </span>
+                        <td><input type="text" id="sr_code_edit"></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>NER - </span>
+                        <td><input type="text" id="ner_code_edit"></td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="code_create_div_column_float_left">
+                <span>Category</span><br><br>
+                <select name="category" id="category_select_edit">
+                    <option value="">Other</option>
+                </select>
+            </div>
+            <div id="element_selector_div_edit" class="code_create_div_column_float_left">
+                <button id="element_selector_button_edit">Element Selector</button>
+                <br><br>
+                <span>Requested By</span><br>
+                <select data-placeholder="Add requesting Entities..." name="request_entities_select"
+                        id="request_entities_select_edit" class="chosen-select" multiple style="width:350px;">
+                    <option value="">Maharashtra</option>
+                    <option value="">ghjghj</option>
+                    <option value="">kjhjkhkjhk</option>
+                </select>
+            </div>
+            <input type="text" id="code_description_input_edit" placeholder="Code Description"
+                   class="code_create_div_column_float_left">
         </div>
     </div>
 </div>

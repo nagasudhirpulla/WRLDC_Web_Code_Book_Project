@@ -18,5 +18,5 @@ exports.create = function (code_ids, rldc_ids, codes, done) {
         console.log("SQL for optional code insertion is " + createdSQL['SQLQueryString'] + createdSQL['SQLQueryValues']);
         if (err) return done(err);
         done(null, result.affectedRows);
-    })
+    });
 };
