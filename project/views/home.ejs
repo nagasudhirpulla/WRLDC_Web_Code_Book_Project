@@ -105,8 +105,8 @@
     <div style="width: 100%;text-align:center">
         <div class="code_creation_div" style="display: inline-block;text-align:left">
             <div class="code_create_div_column_float_left">
-                <input type="checkbox" value="CancelCode"
-                       id="is_cancelled_edit_chkbox"> <span>CancelCode</span>
+                <label style="margin-right: 30px"><input type="checkbox" value="CancelCode"
+                              id="is_cancelled_edit_chkbox"> CancelCode</label><br>
             </div>
             <div class="code_create_div_column_float_left">
                 <table>
@@ -156,6 +156,22 @@
             </div>
             <input type="text" id="code_description_input_edit" placeholder="Code Description"
                    class="code_create_div_column_float_left">
+        </div>
+        <br>
+
+        <div style="display: inline-block;width: 100%">
+            <span>TIME - </span><input type="time" id="code_time_edit" value="10:10">
+        </div>
+        <br>
+
+        <div style="display: inline-block;width: 100%">
+            <div style="display: inline-block;text-align: left;float: left;margin-left: 30px">
+                <button>Create Revival Code</button>
+            </div>
+            <div style="display: inline-block;text-align: left;float: right;margin-right: 40px">
+                <button style="margin-right: 20px">Cancel Changes</button>
+                <button>Commit Changes</button>
+            </div>
         </div>
     </div>
 </div>

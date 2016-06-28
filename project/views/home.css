@@ -9,11 +9,6 @@
     margin-right: 10px;
 }
 
-.entity_selector_div_column_float_right {
-    float: right;
-    margin-left: 10px;
-}
-
 .scrollable_ul{
     list-style-type:none;
     padding: 0px;
