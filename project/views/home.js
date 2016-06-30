@@ -241,3 +241,24 @@ function createRequestingEntities(main_code, request_entities_ids_array) {
         }
     });
 }
+
+function getDisplayCodes() {
+    $.ajax({
+        //create code through post request
+        url: "http://localhost:3000/api/codes/fordisplay/",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            if (data["Error"]) {
+                toastr["warning"]("Codes couldn't be loaded from server\nTry Again... ");
+                console.log("Codes couldn't be loaded from server, Error: " + JSON.stringify(data.Error));
+            } else {
+                console.log("Codes loaded for display are \n" + data.codes);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
