@@ -1,15 +1,13 @@
 <!doctype html>
 <html>
 <head>
-    <script src="libs/jquery-3.0.0.min.js"></script>
-    <script src="libs/chosen.jquery.min.js"></script>
-    <!--<script src="example.js"></script>-->
     <link href="libs/toastr.min.css" rel="stylesheet"/>
-    <script src="libs/toastr.min.js"></script>
-    <script src="libs/custom/utils.js"></script>
-    <script src="home.js"></script>
     <link rel="stylesheet" type="text/css" href="./home.css">
     <link rel="stylesheet" href="libs/chosen.min.css">
+    <link rel="stylesheet" href="./libs/slickgridlibs/css/slick.grid.css" type="text/css"/>
+    <link rel="stylesheet" href="./libs/slickgridlibs/css/jquery-ui-1.8.16.custom.css" type="text/css"/>
+    <link rel="stylesheet" href="./libs/slickgridlibs/plugins/css/plugins-common.css" type="text/css"/>
+    <link rel="stylesheet" href="./libs/slickgridlibs/plugins/css/plugins-excel-style.css" type="text/css"/>
 </head>
 <body>
 <div style="border: 1px solid darkslategray; padding: 10px">
@@ -76,6 +74,13 @@
 </div>
 <br>
 
+<div id="codes_display_div" style="margin-right:20px;margin-left:20px">
+    <h2>Codes</h2>
+
+    <div id="myGrid" style="height:400px;border: 1px solid #6CD89D"></div>
+    <br>
+</div>
+
 <div style="border: 1px solid darkslategray;padding: 10px;display:none">
     <h1>Entity Selector</h1>
 
@@ -106,7 +111,7 @@
         <div class="code_creation_div" style="display: inline-block;text-align:left">
             <div class="code_create_div_column_float_left">
                 <label style="margin-right: 30px"><input type="checkbox" value="CancelCode"
-                              id="is_cancelled_edit_chkbox"> CancelCode</label><br>
+                                                         id="is_cancelled_edit_chkbox"> CancelCode</label><br>
             </div>
             <div class="code_create_div_column_float_left">
                 <table>
@@ -175,5 +180,30 @@
         </div>
     </div>
 </div>
+<script src="./libs/jquery/jquery-1.7.min.js"></script>
+<script src="libs/chosen.jquery.min.js"></script>
+<!--<script src="example.js"></script>-->
+
+<script src="./libs/slickgridlibs/firebugx.js"></script>
+<script src="./libs/jquery/jquery-ui-1.8.16.custom.min.js"></script>
+<script src="./libs/jquery/jquery.event.drag-2.2.js"></script>
+<script src="./libs/jquery/scrollMonitor.js"></script>
+<script src="./libs/slickgridlibs/slick.core.js"></script>
+<script src="./libs/slickgridlibs/plugins/slick.autotooltips.js"></script>
+<script src="./libs/slickgridlibs/plugins/slick.cellrangedecorator.js"></script>
+<script src="./libs/slickgridlibs/plugins/slick.cellrangeselector.js"></script>
+<script src="./libs/slickgridlibs/plugins/slick.cellexternalcopymanager.js"></script>
+<script src="./libs/slickgridlibs/plugins/slick.cellselectionmodel.js"></script>
+<script src="./libs/slickgridlibs/slick.editors.js"></script>
+<script src="./libs/slickgridlibs/slick.formatters.js"></script>
+<script src="./libs/slickgridlibs/slick.grid.js"></script>
+<script src="./libs/slickgridlibs/plugins/ext.overlays.js"></script>
+<script src="./libs/slickgridlibs/slick.dataview.js"></script>
+<script src="./libs/slickgridlibs/plugins/slick.autocolumnsize.js"></script>
+
+<script src="libs/toastr.min.js"></script>
+<script src="./SetupGrid.js"></script>
+<script src="home.js"></script>
+<script src="libs/custom/utils.js"></script>
 </body>
 </html>

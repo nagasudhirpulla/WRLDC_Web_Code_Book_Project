@@ -1,4 +1,5 @@
 var mRldcIdsArray = [];
+var grid; //The cell grid object.
 document.onreadystatechange = function () {
     if (document.readyState == "interactive") {
 
@@ -25,6 +26,7 @@ toastr.options = {
 };
 function onDomComplete() {
     $(".chosen-select").chosen({enable_split_word_search: true, search_contains: true});
+    getDisplayCodes();
     $.ajax({
         //fetch categories from sever
         url: "http://localhost:3000/api/categories/",
@@ -254,7 +256,8 @@ function getDisplayCodes() {
                 toastr["warning"]("Codes couldn't be loaded from server\nTry Again... ");
                 console.log("Codes couldn't be loaded from server, Error: " + JSON.stringify(data.Error));
             } else {
-                console.log("Codes loaded for display are \n" + data.codes);
+                //console.log("Codes loaded for display are \n" + JSON.stringify(data.codes));
+                grid = setUpGrid(data.codes);
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
