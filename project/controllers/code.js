@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Code = require('../models/code.js');
 
-router.get('/', function (req, res) {
-    Code.getAll(function (err, rows) {
+router.get('/fordisplay', function (req, res) {
+    Code.getForDisplay(function (err, rows) {
         if (err) {
             res.json({'Error': err});
         }
