@@ -14,7 +14,8 @@
     "morgan": "^1.7.0",
     "mysql": "^2.10.2",
 	"ejs": "latest",
-    "body-parser" : "latest"
+    "body-parser" : "latest",
+    "serve-favicon" : "latest"
   },
   "devDependencies": {
     "chai": "^3.5.0",
