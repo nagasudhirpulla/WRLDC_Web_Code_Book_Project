@@ -9,8 +9,7 @@ function setUpGrid(data) {
                 //"field" is the field used by the program a particular cell in row
                 field: keys[i],
                 width: 50,
-                toolTip: keys[i],
-                editor: Slick.Editors.Text
+                toolTip: keys[i]
             });
         }
         return columns;
@@ -18,8 +17,9 @@ function setUpGrid(data) {
 
     var headerClick = function (e, args) {
         var colInd = args.grid.getColumnIndex(args.column.id);
-        args.grid.getSelectionModel().setSelectedRanges([new Slick.Range(0, colInd, grid.getData().length, colInd)]);
+        args.grid.getSelectionModel().setSelectedRanges([new Slick.Range(0, colInd, args.grid.getDataLength() - 1, colInd)]);
         //console.log(columnID);
+        //args.grid.getColumns().length
     };
     var grid;
     //var data = []; //The data used by the cell grid
@@ -88,8 +88,14 @@ function setUpGrid(data) {
     //enabling the excel style functionality by the plugin
     grid.registerPlugin(new Slick.CellExternalCopyManager(pluginOptions));
     grid.registerPlugin(new Slick.AutoTooltips());
+    //grid.registerPlugin(new Ext.Plugins.Overlays({}));
     grid.onCellChanged;
-
+    $(grid.getContainerNode()).keydown(function (event) {
+        if (event.ctrlKey && event.keyCode === 65) {
+            event.preventDefault();
+            grid.getSelectionModel().setSelectedRanges([new Slick.Range(0, 0, grid.getDataLength() - 1, grid.getColumns().length - 1)]);
+        }
+    });
     // Need to use a DataView for the filler plugin
     /*var dataView = new Slick.Data.DataView();
      dataView.onRowCountChanged.subscribe(function (e, args) {

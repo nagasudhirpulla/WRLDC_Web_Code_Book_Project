@@ -46,6 +46,7 @@
                 autoSizeWidth = Math.min(maxWidth, autoSizeWidth);
                 column.width = autoSizeWidth;
             });
+            grid.render();
             grid.setColumns(allColumns);
             grid.onColumnsResized.notify();
         }
