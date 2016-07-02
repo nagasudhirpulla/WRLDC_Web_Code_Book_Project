@@ -1,10 +1,10 @@
 var db = require('../db.js');
 var SQLHelper = require('../helpers/sqlHelper');
 
-exports.create1 = function (cat_id, desc, elem_id, done) {
+exports.createExplicit = function (code, cat_id, desc, elem_id, done) {
     var tableName = "codes";
     var argNames = ["code", "category_id", "description", "element_id"];
-    var values = [['0'], [cat_id], [desc], [elem_id]];
+    var values = [[code], [cat_id], [desc], [elem_id]];
     var createdSQL = SQLHelper.createSQLInsertString(tableName, argNames, values);
     db.get().query(createdSQL['SQLQueryString'], createdSQL['SQLQueryValues'], function (err, result) {
         if (err) return done(err);
