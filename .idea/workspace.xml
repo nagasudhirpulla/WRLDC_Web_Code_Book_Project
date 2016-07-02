@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b549b70-f1a4-463d-979e-1486f867bf12" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/models/code.js" afterPath="$PROJECT_DIR$/project/models/code.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WRLDC_Web_Code_Book_Project.iws" />
@@ -620,7 +619,13 @@
       <option name="project" value="LOCAL" />
       <updated>1467446408000</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="updated code model for new code creation by specifying code">
+      <created>1467446457611</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1467446457611</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -677,7 +682,8 @@
     <MESSAGE value="updated for setupgrid" />
     <MESSAGE value="updated for setupGrid" />
     <MESSAGE value="updated code model for new code creation" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated code model for new code creation" />
+    <MESSAGE value="updated code model for new code creation by specifying code" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated code model for new code creation by specifying code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
