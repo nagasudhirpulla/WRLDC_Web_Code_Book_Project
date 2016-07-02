@@ -1,12 +1,21 @@
 var db = require('../db.js');
 var SQLHelper = require('../helpers/sqlHelper');
 
-exports.create = function (cat_id, desc, elem_id, done) {
+exports.create1 = function (cat_id, desc, elem_id, done) {
     var tableName = "codes";
-    var argNames = ["category_id", "description", "element_id"];
-    var values = [[cat_id], [desc], [elem_id]];
+    var argNames = ["code", "category_id", "description", "element_id"];
+    var values = [['0'], [cat_id], [desc], [elem_id]];
     var createdSQL = SQLHelper.createSQLInsertString(tableName, argNames, values);
     db.get().query(createdSQL['SQLQueryString'], createdSQL['SQLQueryValues'], function (err, result) {
+        if (err) return done(err);
+        done(null, result.insertId);
+    })
+};
+
+exports.create = function (cat_id, desc, elem_id, done) {
+    var values = [cat_id, desc, elem_id];
+    var createdSQLString = "START TRANSACTION;SELECT * FROM codes FOR UPDATE;SET @asd = (SELECT MAX(code) FROM codes WHERE time = (SELECT IFNULL(MAX(time),-1) FROM codes));INSERT INTO codes(code, category_id, description, element_id) VALUES (@asd+1,?,?,?);COMMIT;";
+    db.get().query(createdSQLString, values, function (err, result) {
         if (err) return done(err);
         done(null, result.insertId);
     })
