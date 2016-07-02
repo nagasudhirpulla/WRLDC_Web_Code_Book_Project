@@ -1,3 +1,4 @@
+//TODO create the green bottom border for selected cell headers by attaching the selected-header class in the external overlays plugin which is not included
 function setUpGrid(data) {
     var createGridColumns = function (keys) {
         var columns = [];
