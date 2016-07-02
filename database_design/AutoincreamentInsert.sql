@@ -1,0 +1,4 @@
+START TRANSACTION;
+SELECT * FROM codes FOR UPDATE;
+SET @asd = (SELECT MAX(code) FROM codes WHERE time = (SELECT IFNULL(MAX(time),-1) FROM codes));
+COMMIT;
