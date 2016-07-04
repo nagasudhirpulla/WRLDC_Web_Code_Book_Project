@@ -116,6 +116,7 @@ function fillEntitiesList(entsArray) {
 }
 
 function createCode() {
+    //http://stackoverflow.com/questions/17112852/get-the-new-record-primary-key-id-from-mysql-insert-query
     var isOtherCodesRequired = true;
     if (!confirm("********** Create the code ??? **********")) {
         return;
