@@ -26,7 +26,7 @@ toastr.options = {
 };
 function onDomComplete() {
     $(".chosen-select").chosen({enable_split_word_search: true, search_contains: true});
-    getDisplayCodes();
+    getDisplayCodes(true);
     $.ajax({
         //fetch categories from sever
         url: "http://localhost:3000/api/categories/",
@@ -113,7 +113,6 @@ function fillEntitiesList(entsArray) {
         li.appendChild(document.createTextNode(entsArray[i].name));
         entsUl.appendChild(li);
     }
-
 }
 
 function createCode() {
@@ -145,16 +144,17 @@ function createCode() {
                 toastr["warning"]("Code couldn't be inserted\nTry Again... ");
                 console.log("Code couldn't be inserted, Error: " + JSON.stringify(data.Error));
             } else {
-                toastr["success"]("The code issued is " + JSON.stringify(data.new_code));
-                console.log("The code issued is " + JSON.stringify(data.new_code));
+                toastCode(data.new_code);
+                console.log("The code id issued is " + data.new_code);
                 if (isOtherCodesRequired) {
                     createOtherCodes(data.new_code, nl_code, nr_code, er_code, sr_code, ner_code);
                 }
                 if (request_entities_ids_array.length > 0) {
                     createRequestingEntities(data.new_code, request_entities_ids_array);
                 }
+                //Refresh the codes list after 0.5 seconds
+                window.setTimeout(getDisplayCodes, 500);
             }
-
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -244,7 +244,64 @@ function createRequestingEntities(main_code, request_entities_ids_array) {
     });
 }
 
-function getDisplayCodes() {
+function createZeroCode() {
+    //For creating a code zero. This will be a dummy code just for the sake of code sequence restart
+    //search for 'other' category in the categories array else set category = 1
+    $.ajax({
+        //create code through post request
+        url: "http://localhost:3000/api/codes/create_explicit/",
+        type: "POST",
+        data: {
+            code: 0,
+            desc: "Zero Code",
+            cat: searchSelectForText(document.querySelector("#category_select"), "other"),
+            elem_id: null,
+            req_array: []
+        },
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            if (data["Error"]) {
+                toastr["warning"]("Code couldn't be inserted\nTry Again... ");
+                console.log("Code couldn't be inserted, Error: " + JSON.stringify(data.Error));
+            } else {
+                //we get code id but not code, so do get query with code id and get the codo to be issued and toast it
+                console.log("The code id issued is " + JSON.stringify(data.new_code));
+                toastCode(data.new_code);
+                //Refresh the codes list after 0.5 seconds
+                window.setTimeout(getDisplayCodes, 500);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
+
+function toastCode(new_code_id) {
+    alert("new code id is " + new_code_id);
+    $.ajax({
+        //create code through post request
+        url: "http://localhost:3000/api/codes/?id=" + new_code_id,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            if (data["Error"]) {
+                //toastr["warning"]("Codes couldn't be loaded from server\nTry Again... ");
+                console.log("get code couldn't be loaded from server, Error: " + JSON.stringify(data.Error));
+            } else {
+                toastr["success"]("The code issued is " + JSON.stringify(data.codes[0].code));
+                console.log("The code issued is " + JSON.stringify(data.codes[0].code));
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
+
+function getDisplayCodes(recreate) {
     $.ajax({
         //create code through post request
         url: "http://localhost:3000/api/codes/fordisplay/",
@@ -257,7 +314,12 @@ function getDisplayCodes() {
                 console.log("Codes couldn't be loaded from server, Error: " + JSON.stringify(data.Error));
             } else {
                 //console.log("Codes loaded for display are \n" + JSON.stringify(data.codes));
-                grid = setUpGrid(data.codes);
+                if (recreate) {
+                    grid = setUpGrid(data.codes);
+                } else {
+                    grid.setData(data.codes);
+                    grid.render();
+                }
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
