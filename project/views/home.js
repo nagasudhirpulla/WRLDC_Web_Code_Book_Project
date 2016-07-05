@@ -279,8 +279,15 @@ function createZeroCode() {
     });
 }
 
+function month_start_button_click(){
+    if (confirm("Create zero code???")) {
+        if (confirm("*****Are You Sure, If not sure press cancel*****")) {
+            createZeroCode();
+        }
+    }
+}
+
 function toastCode(new_code_id) {
-    alert("new code id is " + new_code_id);
     $.ajax({
         //create code through post request
         url: "http://localhost:3000/api/codes/?id=" + new_code_id,

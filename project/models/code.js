@@ -17,11 +17,11 @@ exports.createExplicit = function (code, cat_id, desc, elem_id, done) {
 
 exports.create = function (cat_id, desc, elem_id, done) {
     var values = [cat_id, desc, elem_id];
-    var createdSQLString = "START TRANSACTION;SELECT * FROM codes FOR UPDATE;SET @asd = (SELECT MAX(code) FROM codes WHERE time = (SELECT IFNULL(MAX(time),-1) FROM codes));INSERT INTO codes(code, category_id, description, element_id) VALUES (@asd+1,?,?,?);COMMIT;";
+    var createdSQLString = "CALL addcode(?, ?, ?)";
     db.get().query(createdSQLString, values, function (err, result) {
         console.log("create code db result is " + JSON.stringify(result));
         if (err) return done(err);
-        done(null, result.insertId);
+        done(null, result[0][0]['newcode']);
     });
 };
 
