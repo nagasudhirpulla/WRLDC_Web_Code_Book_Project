@@ -70,6 +70,7 @@ function findAndRemoveFromArray(arr, elem){
     if (index > -1) {
         arr.splice(index, 1);
     }
+    return arr;
 }
 
 function removeOptions(selectbox) {
