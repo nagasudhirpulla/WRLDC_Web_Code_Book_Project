@@ -12,6 +12,16 @@ function setUpGrid(data) {
                 width: 50,
                 toolTip: keys[i]
             });
+            if (keys[i] == 'edit') {
+                columns[i].formatter = function (row, cell, value, columnDef, dataContext) {
+                    return "<a class='code-row-edit-button ui-icon ui-icon-pencil' onclick='editCodeOfRow(" + row + ")'>Edit</a>";
+                };
+            }
+            if (keys[i] == 'time') {
+                columns[i].formatter = function (row, cell, value, columnDef, dataContext) {
+                    return getDateTimeString(new Date(value));
+                };
+            }
         }
         return columns;
     };
@@ -83,6 +93,14 @@ function setUpGrid(data) {
     };
     //cell grid options for customization over
     var columns = createGridColumns(Object.keys(data[0]));
+    //setting meta data for data array
+    data.getItemMetadata = function (row) {
+        if (data && data[row] && data[row]['is_cancelled'] && data[row]['is_cancelled'] == 1) {
+            return {
+                "cssClasses": 'striked'
+            };
+        }
+    };
     //Building the grid and configuring the grid
     grid = new Slick.Grid("#myGrid", data, columns, options);
     grid.setSelectionModel(new Slick.CellSelectionModel());

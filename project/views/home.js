@@ -25,6 +25,11 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 function onDomComplete() {
+    $(document).on('mouseenter', ".slick-row", function () {
+        $(this).addClass('row-hovered');
+    }).on('mouseleave', ".slick-row", function () {
+        $(this).removeClass('row-hovered');
+    });
     $(".chosen-select").chosen({enable_split_word_search: true, search_contains: true});
     getDisplayCodes(true);
     $.ajax({
@@ -57,6 +62,23 @@ function onDomComplete() {
             console.log(textStatus, errorThrown);
         }
     });
+
+    /*$.ajax({
+     //fetch entities from wrldc sever
+     url: "http://103.7.130.119:8181/json.ashx?r=owns",
+     type: "GET",
+     crossDomain: true,
+     dataType: "jsonp",
+     success: function (data) {
+     toastr["info"]("Entities get fetch result is " + JSON.stringify(data));
+     fillEntitiesList(data);
+     fillRequestedList(data);
+     //alert("Entities get fetch result is " + JSON.stringify(data));
+     },
+     error: function (jqXHR, textStatus, errorThrown) {
+     console.log(textStatus, errorThrown);
+     }
+     });*/
 
     $.ajax({
         //fetch rldcs from sever
@@ -101,6 +123,21 @@ function fillRequestedList(entsArray) {
     $(reqSelectEl).trigger("chosen:updated");
 }
 
+/*function fillRequestedList(entsArray) {
+ var reqSelectEl = document.getElementById("request_entities_select");
+ $(reqSelectEl).empty();
+ $(reqSelectEl).trigger("chosen:updated");
+ for (var i = 0; i < entsArray.length; i++) {
+ $(reqSelectEl).append($("<option/>", {
+ value: entsArray[i].id,
+ text: entsArray[i].sname
+ }));
+ }
+ //change selected entities by the following statement
+ $(reqSelectEl).val([entsArray[1].id, entsArray[3].id]).trigger("chosen:updated");
+ $(reqSelectEl).trigger("chosen:updated");
+ }*/
+
 function fillEntitiesList(entsArray) {
     var entsUl = document.getElementById("entity_selector");
     for (var i = 0; i < entsArray.length; i++) {
@@ -114,6 +151,23 @@ function fillEntitiesList(entsArray) {
         entsUl.appendChild(li);
     }
 }
+
+/*
+ function fillEntitiesList(entsArray) {
+ var entsUl = document.getElementById("entity_selector");
+ for (var i = 0; i < entsArray.length; i++) {
+ var li = document.createElement("li");
+ var checkbox = document.createElement('input');
+ checkbox.type = "checkbox";
+ checkbox.name = entsArray[i].sname;
+ checkbox.value = entsArray[i].sname;
+ li.appendChild(checkbox);
+ li.appendChild(document.createTextNode(entsArray[i].sname));
+ entsUl.appendChild(li);
+ }
+ }
+ */
+
 
 function createCode() {
     //http://stackoverflow.com/questions/17112852/get-the-new-record-primary-key-id-from-mysql-insert-query
@@ -279,7 +333,7 @@ function createZeroCode() {
     });
 }
 
-function month_start_button_click(){
+function month_start_button_click() {
     if (confirm("Create zero code???")) {
         if (confirm("*****Are You Sure, If not sure press cancel*****")) {
             createZeroCode();
@@ -323,9 +377,11 @@ function getDisplayCodes(recreate) {
             } else {
                 //console.log("Codes loaded for display are \n" + JSON.stringify(data.codes));
                 if (recreate) {
-                    grid = setUpGrid(data.codes);
+                    var gridData = addButtonColumns(data.codes);
+                    grid = setUpGrid(gridData);
                 } else {
-                    grid.setData(data.codes);
+                    var gridData = addButtonColumns(data.codes);
+                    grid.setData(gridData);
                     grid.render();
                 }
             }
@@ -334,4 +390,22 @@ function getDisplayCodes(recreate) {
             console.log(textStatus, errorThrown);
         }
     });
+}
+
+function addButtonColumns(data) {
+    for (var i = 0; i < data.length; i++) {
+        data[i]['edit'] = '';
+    }
+    return data;
+}
+
+function editCodeOfRow(row) {
+    alert("Button of row " + row + " pressed!!!");
+    if (grid.getData()[row]['id']) {
+        populateEditCodeUI(grid.getData()[row]['id']);
+    }
+}
+
+function populateEditCodeUI() {
+
 }

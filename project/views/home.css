@@ -26,3 +26,15 @@
     margin-bottom: 5px ;
     padding-right: 5px;
 }
+
+.striked > .slick-cell{
+    text-decoration: line-through;
+}
+
+.row-hovered > .slick-cell{
+    background: #d7f4e4;
+}
+
+.code-row-edit-button {
+
+}

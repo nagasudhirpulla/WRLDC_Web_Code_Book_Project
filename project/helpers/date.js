@@ -27,13 +27,13 @@ exports.getDateTimeString = function (today) {
         mm = '0' + mm;
     }
     if (hrs < 10) {
-        dd = '0' + dd;
+        hrs = '0' + hrs;
     }
     if (mins < 10) {
-        mm = '0' + mm;
+        mins = '0' + mins;
     }
     if (secs < 10) {
-        dd = '0' + dd;
+        secs = '0' + secs;
     }
     today = yyyy + '-' + mm + '-' + dd + " " + hrs + ":" + mins + ":" + secs;
     return today;
