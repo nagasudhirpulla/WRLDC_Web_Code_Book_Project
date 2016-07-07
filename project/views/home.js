@@ -1,5 +1,6 @@
 var mRldcIdsArray = [];
 var grid; //The cell grid object.
+var gridElId = "#myGrid";
 document.onreadystatechange = function () {
     if (document.readyState == "interactive") {
 
@@ -25,7 +26,7 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 function onDomComplete() {
-    $(document).on('mouseenter', ".slick-row", function () {
+    $(gridElId).on('mouseenter', ".slick-row", function () {
         $(this).addClass('row-hovered');
     }).on('mouseleave', ".slick-row", function () {
         $(this).removeClass('row-hovered');
@@ -101,26 +102,32 @@ function fillRldcsList(rldcsArray) {
 }
 
 function fillCategoriesList(catsArray) {
-    var catSelectEl = document.getElementById("category_select");
-    removeOptions(catSelectEl);
-    for (var i = 0; i < catsArray.length; i++) {
-        catSelectEl.options[catSelectEl.options.length] = new Option(catsArray[i].name, catsArray[i].id);//new Option('Text 1', 'Value1');
+    var selElArray = ["category_select", "category_select_edit"];
+    for (var k = 0; k < selElArray.length; k++) {
+        var catSelectEl = document.getElementById(selElArray[k]);
+        removeOptions(catSelectEl);
+        for (var i = 0; i < catsArray.length; i++) {
+            catSelectEl.options[catSelectEl.options.length] = new Option(catsArray[i].name, catsArray[i].id);//new Option('Text 1', 'Value1');
+        }
     }
 }
 
 function fillRequestedList(entsArray) {
-    var reqSelectEl = document.getElementById("request_entities_select");
-    $(reqSelectEl).empty();
-    $(reqSelectEl).trigger("chosen:updated");
-    for (var i = 0; i < entsArray.length; i++) {
-        $(reqSelectEl).append($("<option/>", {
-            value: entsArray[i].id,
-            text: entsArray[i].name
-        }));
+    var selElArray = ["request_entities_select", "request_entities_select_edit"];
+    for (var k = 0; k < selElArray.length; k++) {
+        var reqSelectEl = document.getElementById(selElArray[k]);
+        $(reqSelectEl).empty();
+        $(reqSelectEl).trigger("chosen:updated");
+        for (var i = 0; i < entsArray.length; i++) {
+            $(reqSelectEl).append($("<option/>", {
+                value: entsArray[i].id,
+                text: entsArray[i].name
+            }));
+        }
+        //change selected entities by the following statement
+        $(reqSelectEl).val([entsArray[1].id, entsArray[3].id]).trigger("chosen:updated");
+        $(reqSelectEl).trigger("chosen:updated");
     }
-    //change selected entities by the following statement
-    $(reqSelectEl).val([entsArray[1].id, entsArray[3].id]).trigger("chosen:updated");
-    $(reqSelectEl).trigger("chosen:updated");
 }
 
 /*function fillRequestedList(entsArray) {
@@ -379,6 +386,11 @@ function getDisplayCodes(recreate) {
                 if (recreate) {
                     var gridData = addButtonColumns(data.codes);
                     grid = setUpGrid(gridData);
+                    $(gridElId).trigger($.extend({}, jQuery.Event("keydown"), {
+                        keyCode: 65,
+                        ctrlKey: true,
+                        shiftKey: true
+                    }));
                 } else {
                     var gridData = addButtonColumns(data.codes);
                     grid.setData(gridData);
@@ -400,12 +412,47 @@ function addButtonColumns(data) {
 }
 
 function editCodeOfRow(row) {
-    alert("Button of row " + row + " pressed!!!");
+    console.log("Button of row " + row + " pressed!!!");
     if (grid.getData()[row]['id']) {
         populateEditCodeUI(grid.getData()[row]['id']);
     }
 }
 
-function populateEditCodeUI() {
-
+function populateEditCodeUI(recordId) {
+    $("#edit_dialog").dialog({
+        bgiframe: true,
+        title: " ",
+        position: 'center',
+        width: $(window).width() - 180,
+        height: $(window).height() - 180,
+        modal: true
+    });
+    //get the code values from server
+    $.ajax({
+        //create code through post request
+        url: "http://localhost:3000/api/codes/?id=" + recordId,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            if (data["Error"]) {
+                toastr["warning"]("Code couldn't be loaded from server\nTry Again... ");
+                console.log("get code couldn't be loaded from server, Error: " + JSON.stringify(data.Error));
+                $("#edit_dialog").dialog("close");
+            } else {
+                //console.log("The code issued is " + JSON.stringify(data.codes[0].code));
+                var codeObj = data.codes[0];
+                $("#code_edit_span").text(codeObj.id + " / " + codeObj.code);
+                $("#category_select_edit").val(codeObj.categoryId);
+                $("#code_description_input_edit").val(codeObj.description);
+                $("#is_cancelled_edit_chkbox").attr('checked', codeObj.is_cancelled != 0 ? true : false);
+                $("#request_entities_select_edit").val(codeObj.requestedbyIds.split(", ").map(Number)).trigger("chosen:updated");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+            toastr["warning"]("Code couldn't be loaded from server\nTry Again... ");
+            $("#edit_dialog").dialog("close");
+        }
+    });
 }

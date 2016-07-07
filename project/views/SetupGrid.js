@@ -1,5 +1,6 @@
 //TODO create the green bottom border for selected cell headers by attaching the selected-header class in the external overlays plugin which is not included
 function setUpGrid(data) {
+    var gridElId = "#myGrid";
     var createGridColumns = function (keys) {
         var columns = [];
         for (var i = 0; i < keys.length; i++) {
@@ -102,7 +103,7 @@ function setUpGrid(data) {
         }
     };
     //Building the grid and configuring the grid
-    grid = new Slick.Grid("#myGrid", data, columns, options);
+    grid = new Slick.Grid(gridElId, data, columns, options);
     grid.setSelectionModel(new Slick.CellSelectionModel());
     //enabling the excel style functionality by the plugin
     grid.registerPlugin(new Slick.CellExternalCopyManager(pluginOptions));
@@ -130,5 +131,7 @@ function setUpGrid(data) {
      dataView.endUpdate();*/
     grid.registerPlugin(new Slick.AutoColumnSize());
     grid.onHeaderClick.subscribe(headerClick);
+    var e = jQuery.Event("keydown");
+    var fake = $.extend({}, jQuery.Event("keydown"), {which: 65, ctrlKey: true, shiftKey: true});
     return grid;
 }

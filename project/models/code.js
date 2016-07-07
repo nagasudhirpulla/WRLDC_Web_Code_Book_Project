@@ -37,3 +37,16 @@ exports.getForDisplay = function (id, done) {
         done(null, rows);
     });
 };
+
+exports.getForEdit = function (id, done) {
+    var whereClause = "";
+    if (id && !isNaN(id)) {//qualifies if id != "" and id!=null and id is a number
+        whereClause = "WHERE codes.id = " + id + " ";
+    }
+    var sql = "SELECT codes.id ,codes.code, codes.time, codes.description, codes.is_cancelled, cats.name AS category, cats.id AS categoryId, elems.name AS element, elems.id AS elementId, GROUP_CONCAT(DISTINCT CONCAT(oc.name, ' ', oc.code) SEPARATOR ', ') AS othercodes, GROUP_CONCAT(DISTINCT crs.id SEPARATOR ', ') AS requestedbyIds, GROUP_CONCAT(DISTINCT crs.name SEPARATOR ', ') AS requestedby, times.time AS codetime FROM codes LEFT OUTER JOIN (SELECT optional_codes.id, optional_codes.code_id, optional_codes.code, rldcs.name FROM optional_codes INNER JOIN rldcs ON rldcs.id = optional_codes.rldc_id) AS oc ON codes.id = oc.code_id LEFT OUTER JOIN (SELECT code_requests.code_id, entities.name, entities.id FROM code_requests INNER JOIN entities ON code_requests.entity_id = entities.id) AS crs ON codes.id = crs.code_id LEFT OUTER JOIN categories AS cats ON codes.category_id = cats.id LEFT OUTER JOIN elements AS elems ON codes.element_id = elems.id LEFT OUTER JOIN times ON codes.id = times.code_id " + whereClause + "GROUP BY codes.id ORDER BY codes.time DESC";
+    //console.log("sql for get single is " + sql);
+    db.get().query(sql, function (err, rows) {
+        if (err) return done(err);
+        done(null, rows);
+    });
+};

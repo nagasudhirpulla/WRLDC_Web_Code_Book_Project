@@ -13,7 +13,7 @@ router.get('/fordisplay', function (req, res) {
 
 router.get('/', function (req, res) {
     //console.log("get req params for get single are " + JSON.stringify(req.query));
-    Code.getForDisplay(req.query.id, function (err, rows) {
+    Code.getForEdit(req.query.id, function (err, rows) {
         if (err) {
             res.json({'Error': err});
         }
