@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/database_design/AutoincreamentInsert.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/database_design/code_time_update.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/database_design/codes_display.sql" dialect="H2" />
     <file url="file://$PROJECT_DIR$/database_design/wrldc_web_code_book_project.sql" dialect="MySQL" />
   </component>

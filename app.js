@@ -30,6 +30,7 @@ app.use('/api/entities', require('./project/controllers/entity'));
 app.use('/api/regions', require('./project/controllers/region'));
 app.use('/api/associates', require('./project/controllers/associate'));
 app.use('/api/codes', require('./project/controllers/code'));
+app.use('/api/code_times', require('./project/controllers/code_time'));
 app.use('/api/optional_codes', require('./project/controllers/optional_code'));
 app.use('/api/code_requests', require('./project/controllers/code_request'));
 app.use('/', require('./project/controllers/general'));

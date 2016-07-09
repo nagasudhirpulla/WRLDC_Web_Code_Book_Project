@@ -447,6 +447,22 @@ function populateEditCodeUI(recordId) {
                 $("#code_description_input_edit").val(codeObj.description);
                 $("#is_cancelled_edit_chkbox").attr('checked', codeObj.is_cancelled != 0 ? true : false);
                 $("#request_entities_select_edit").val(codeObj.requestedbyIds.split(", ").map(Number)).trigger("chosen:updated");
+                var otherCodes = codeObj.othercodes.split(', ');
+                for (var i = 0; i < otherCodes.length; i++) {
+                    if (otherCodes[i].indexOf("NLDC ") == 0) {
+                        $("#nl_code_edit").val(otherCodes[i].substring(5));
+                    } else if (otherCodes[i].indexOf("NRLDC ") == 0) {
+                        $("#nr_code_edit").val(otherCodes[i].substring(6));
+                    } else if (otherCodes[i].indexOf("ERLDC ") == 0) {
+                        $("#er_code_edit").val(otherCodes[i].substring(6));
+                    } else if (otherCodes[i].indexOf("SRLDC ") == 0) {
+                        $("#sr_code_edit").val(otherCodes[i].substring(6));
+                    } else if (otherCodes[i].indexOf("NERLDC ") == 0) {
+                        $("#ner_code_edit").val(otherCodes[i].substring(7));
+                    }
+                }
+                //$("#code_time_edit").val()
+                //$("#code_date_edit").val()
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
