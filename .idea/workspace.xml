@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b549b70-f1a4-463d-979e-1486f867bf12" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/views/SetupGrid.js" afterPath="$PROJECT_DIR$/project/views/SetupGrid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/views/home.ejs" afterPath="$PROJECT_DIR$/project/views/home.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/views/home.js" afterPath="$PROJECT_DIR$/project/views/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/views/libs/custom/utils.js" afterPath="$PROJECT_DIR$/project/views/libs/custom/utils.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/database_design/code_update.sql" />
+      <change type="DELETED" beforePath="C:\Users\Nagasudhir\Documents\WRLDC_Web_Code_Book_Project\database_design\code_time_update.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WRLDC_Web_Code_Book_Project.iws" />
@@ -38,14 +36,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.ejs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="home.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/views/home.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4458042">
-              <caret line="182" column="60" selection-start-line="182" selection-start-column="60" selection-end-line="182" selection-end-column="60" />
+            <state vertical-scroll-proportion="-20.615385">
+              <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#div#2;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="code_update.sql" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/database_design/code_update.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.37362638">
+              <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -110,26 +119,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/views/home.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="8" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="region.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/models/region.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
@@ -138,7 +127,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/project/tests/models/category.js" />
         <option value="$PROJECT_DIR$/project/models/rldc.js" />
         <option value="$PROJECT_DIR$/project/models/entity.js" />
         <option value="$PROJECT_DIR$/project/tests/models/entity.js" />
@@ -182,13 +170,14 @@
         <option value="$PROJECT_DIR$/project/controllers/code.js" />
         <option value="$PROJECT_DIR$/project/models/code.js" />
         <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/database_design/code_time_update.sql" />
         <option value="$PROJECT_DIR$/project/models/code_time.js" />
         <option value="$PROJECT_DIR$/project/controllers/code_time.js" />
         <option value="$PROJECT_DIR$/project/views/SetupGrid.js" />
         <option value="$PROJECT_DIR$/project/views/libs/custom/utils.js" />
         <option value="$PROJECT_DIR$/project/views/home.js" />
         <option value="$PROJECT_DIR$/project/views/home.ejs" />
+        <option value="$PROJECT_DIR$/database_design/code_time_update.sql" />
+        <option value="$PROJECT_DIR$/database_design/code_update.sql" />
       </list>
     </option>
   </component>
@@ -617,7 +606,13 @@
       <option name="project" value="LOCAL" />
       <updated>1468092782731</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="populated the update code screen">
+      <created>1468130142348</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1468130142348</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -626,6 +621,7 @@
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26812688" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3279743" sideWeight="0.5030211" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -634,7 +630,6 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -657,7 +652,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="finished get associates of an element" />
     <MESSAGE value="create code creation div and home page" />
     <MESSAGE value="code creation UI done except element selector" />
     <MESSAGE value="element entry for code remaining" />
@@ -682,7 +676,8 @@
     <MESSAGE value="grid styling donw" />
     <MESSAGE value="to load other rldc codes and code times in edit code dialog" />
     <MESSAGE value="update codetime" />
-    <option name="LAST_COMMIT_MESSAGE" value="update codetime" />
+    <MESSAGE value="populated the update code screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="populated the update code screen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -691,13 +686,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/project/views/libs/slickgridlibs/plugins/css/plugins-common.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database_design/wrldc_web_code_book_project.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5061296">
@@ -970,13 +958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database_design/code_time_update.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14834206">
-          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project/controllers/code.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.028428094">
@@ -1059,11 +1040,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/project/views/home.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4458042">
-          <caret line="182" column="60" selection-start-line="182" selection-start-column="60" selection-end-line="182" selection-end-column="60" />
+        <state vertical-scroll-proportion="-20.615385">
+          <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#div#2;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database_design/code_update.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37362638">
+          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
