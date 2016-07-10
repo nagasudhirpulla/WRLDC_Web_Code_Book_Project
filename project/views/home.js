@@ -440,14 +440,19 @@ function populateEditCodeUI(recordId) {
                 console.log("get code couldn't be loaded from server, Error: " + JSON.stringify(data.Error));
                 $("#edit_dialog").dialog("close");
             } else {
-                //console.log("The code issued is " + JSON.stringify(data.codes[0].code));
+                console.log("The code issued is " + JSON.stringify(data.codes[0]));
                 var codeObj = data.codes[0];
                 $("#code_edit_span").text(codeObj.id + " / " + codeObj.code);
                 $("#category_select_edit").val(codeObj.categoryId);
                 $("#code_description_input_edit").val(codeObj.description);
                 $("#is_cancelled_edit_chkbox").attr('checked', codeObj.is_cancelled != 0 ? true : false);
-                $("#request_entities_select_edit").val(codeObj.requestedbyIds.split(", ").map(Number)).trigger("chosen:updated");
-                var otherCodes = codeObj.othercodes.split(', ');
+                if(codeObj.requestedbyIds){
+                    $("#request_entities_select_edit").val(codeObj.requestedbyIds.split(", ").map(Number)).trigger("chosen:updated");
+                }
+                var otherCodes = [];
+                if(codeObj.othercodes){
+                    var otherCodes = codeObj.othercodes.split(', ');
+                }
                 for (var i = 0; i < otherCodes.length; i++) {
                     if (otherCodes[i].indexOf("NLDC ") == 0) {
                         $("#nl_code_edit").val(otherCodes[i].substring(5));
@@ -461,8 +466,11 @@ function populateEditCodeUI(recordId) {
                         $("#ner_code_edit").val(otherCodes[i].substring(7));
                     }
                 }
-                //$("#code_time_edit").val()
-                //$("#code_date_edit").val()
+                //set code time
+                var code_time = new Date(codeObj.codetime);
+                $("#code_time_edit").val(getTimeString(code_time));
+                //set code date
+                $("#code_date_edit").val(getDateString(code_time))
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {

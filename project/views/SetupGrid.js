@@ -18,9 +18,14 @@ function setUpGrid(data) {
                     return "<a class='code-row-edit-button ui-icon ui-icon-pencil' onclick='editCodeOfRow(" + row + ")'>Edit</a>";
                 };
             }
-            if (keys[i] == 'time') {
+            if (keys[i] == 'time' || keys[i] == 'codetime') {
                 columns[i].formatter = function (row, cell, value, columnDef, dataContext) {
-                    return getDateTimeString(new Date(value));
+                    if(value == "null" || value == null || value == ""){
+                        return "";
+                    }
+                    else{
+                        return getDateTimeString(new Date(value));
+                    }
                 };
             }
         }

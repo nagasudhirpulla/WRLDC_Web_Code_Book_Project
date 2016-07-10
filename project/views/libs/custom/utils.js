@@ -124,4 +124,37 @@ function getDateTimeString(dateObj) {
      }*/
     dateObj = dd + '-' + mm + '-' + yyyy + " / " + hrs + ":" + mins;
     return dateObj;
-};
+}
+
+function getDateString(dateObj) {
+    var dd = dateObj.getDate();
+    var mm = dateObj.getMonth() + 1; //January is 0!
+    var yyyy = dateObj.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    dateObj = yyyy + '-' + mm + '-' + dd;
+    return dateObj;
+}
+
+function getTimeString(dateObj) {
+    var hrs = dateObj.getHours();
+    var mins = dateObj.getMinutes();
+    //var secs = dateObj.getSeconds();
+
+    if (hrs < 10) {
+        hrs = '0' + hrs;
+    }
+    if (mins < 10) {
+        mins = '0' + mins;
+    }
+    /*if (secs < 10) {
+     secs = '0' + secs;
+     }*/
+    dateObj = hrs + ":" + mins;
+    return dateObj;
+}
