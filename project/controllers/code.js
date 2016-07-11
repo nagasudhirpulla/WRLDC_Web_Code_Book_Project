@@ -59,4 +59,17 @@ router.post('/', function (req, res) {
     });
 });
 
+router.put('/', function (req, res) {
+    var is_cancelled = req.body["is_cancelled"];
+    var rldc_ids = req.body["values[rldc_ids][]"];
+    var rldc_codes = req.body["values[codes][]"];
+    var cat = req.body["cat"];
+    var elemId = req.body["element_id"];
+    var entity_ids = req.body["values[entity_ids][]"];
+    var desc = req.body["desc"];
+    var time = req.body["time"];
+
+});
+
+
 module.exports = router;

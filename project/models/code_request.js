@@ -10,5 +10,5 @@ exports.create = function (entity_ids, code_ids, done) {
     db.get().query(createdSQL['SQLQueryString'], createdSQL['SQLQueryValues'], function (err, result) {
         if (err) return done(err);
         done(null, result.affectedRows);
-    })
+    });
 };

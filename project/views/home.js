@@ -1,6 +1,6 @@
 var mRldcIdsArray = [];
-var grid; //The cell grid object.
-var gridElId = "#myGrid";
+var mGrid; //The cell grid object.
+var mGridElId = "#myGrid";
 document.onreadystatechange = function () {
     if (document.readyState == "interactive") {
 
@@ -26,7 +26,7 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 function onDomComplete() {
-    $(gridElId).on('mouseenter', ".slick-row", function () {
+    $(mGridElId).on('mouseenter', ".slick-row", function () {
         $(this).addClass('row-hovered');
     }).on('mouseleave', ".slick-row", function () {
         $(this).removeClass('row-hovered');
@@ -385,16 +385,16 @@ function getDisplayCodes(recreate) {
                 //console.log("Codes loaded for display are \n" + JSON.stringify(data.codes));
                 if (recreate) {
                     var gridData = addButtonColumns(data.codes);
-                    grid = setUpGrid(gridData);
-                    $(gridElId).trigger($.extend({}, jQuery.Event("keydown"), {
+                    mGrid = setUpGrid(gridData);
+                    $(mGridElId).trigger($.extend({}, jQuery.Event("keydown"), {
                         keyCode: 65,
                         ctrlKey: true,
                         shiftKey: true
                     }));
                 } else {
                     var gridData = addButtonColumns(data.codes);
-                    grid.setData(gridData);
-                    grid.render();
+                    mGrid.setData(gridData);
+                    mGrid.render();
                 }
             }
         },
@@ -413,8 +413,8 @@ function addButtonColumns(data) {
 
 function editCodeOfRow(row) {
     console.log("Button of row " + row + " pressed!!!");
-    if (grid.getData()[row]['id']) {
-        populateEditCodeUI(grid.getData()[row]['id']);
+    if (mGrid.getData()[row]['id']) {
+        populateEditCodeUI(mGrid.getData()[row]['id']);
     }
 }
 
@@ -446,11 +446,11 @@ function populateEditCodeUI(recordId) {
                 $("#category_select_edit").val(codeObj.categoryId);
                 $("#code_description_input_edit").val(codeObj.description);
                 $("#is_cancelled_edit_chkbox").attr('checked', codeObj.is_cancelled != 0 ? true : false);
-                if(codeObj.requestedbyIds){
+                if (codeObj.requestedbyIds) {
                     $("#request_entities_select_edit").val(codeObj.requestedbyIds.split(", ").map(Number)).trigger("chosen:updated");
                 }
                 var otherCodes = [];
-                if(codeObj.othercodes){
+                if (codeObj.othercodes) {
                     var otherCodes = codeObj.othercodes.split(', ');
                 }
                 for (var i = 0; i < otherCodes.length; i++) {
@@ -479,4 +479,64 @@ function populateEditCodeUI(recordId) {
             $("#edit_dialog").dialog("close");
         }
     });
+}
+
+function editCode() {
+    var main_code = $("#code_edit_span").text().split("/")[0].trim();
+    var is_cancelled = document.getElementById('is_cancelled_edit_chkbox').checked?1:0;
+    var isOtherCodesRequired = true;
+    var desc = document.getElementById("code_description_input_edit").value;
+    var cat_sel = document.getElementById("category_select_edit");
+    var cat_id = cat_sel.options[cat_sel.selectedIndex].value;
+    var request_entities_ids_array = $("#request_entities_select_edit").val();
+    var nl_code = document.getElementById("nl_code_edit").value;
+    var nr_code = document.getElementById("nr_code_edit").value;
+    var er_code = document.getElementById("er_code_edit").value;
+    var sr_code = document.getElementById("sr_code_edit").value;
+    var ner_code = document.getElementById("ner_code_edit").value;
+    if (nl_code.trim() == "" && nr_code.trim() == "" && er_code.trim() == "" && sr_code.trim() == "" && ner_code.trim() == "") {
+        isOtherCodesRequired = false;
+    }
+    //getting values for editing other rldc codes
+    if (isOtherCodesRequired) {
+        var mainCodesArray = [];
+        var rldcsIdsArray = [];
+        var otherCodesArray = [];
+        for (var i = 0; i < mRldcIdsArray.length; i++) {
+            if (mRldcIdsArray[i].name == "NLDC" && nl_code.trim().length != 0) {
+                mainCodesArray.push(main_code);
+                rldcsIdsArray.push(mRldcIdsArray[i].id);
+                otherCodesArray.push(nl_code);
+            } else if (mRldcIdsArray[i].name == "NRLDC" && nr_code.trim().length != 0) {
+                mainCodesArray.push(main_code);
+                rldcsIdsArray.push(mRldcIdsArray[i].id);
+                otherCodesArray.push(nr_code);
+            } else if (mRldcIdsArray[i].name == "SRLDC" && sr_code.trim().length != 0) {
+                mainCodesArray.push(main_code);
+                rldcsIdsArray.push(mRldcIdsArray[i].id);
+                otherCodesArray.push(sr_code);
+            } else if (mRldcIdsArray[i].name == "ERLDC" && er_code.trim().length != 0) {
+                mainCodesArray.push(main_code);
+                rldcsIdsArray.push(mRldcIdsArray[i].id);
+                otherCodesArray.push(er_code);
+            } else if (mRldcIdsArray[i].name == "NERLDC" && ner_code.trim().length != 0) {
+                mainCodesArray.push(main_code);
+                rldcsIdsArray.push(mRldcIdsArray[i].id);
+                otherCodesArray.push(ner_code);
+            }
+        }
+    }
+    //editing the element is pending
+    if (request_entities_ids_array.length > 0) {
+        var mainCodesArrayForReqEnts = [];
+        for (var i = 0; i < request_entities_ids_array.length; i++) {
+            mainCodesArrayForReqEnts.push(main_code);
+        }
+        var ReqEntsValues = {code_ids: mainCodesArrayForReqEnts, entity_ids: request_entities_ids_array};//[main_code_id, requesting_entity_id]
+        console.log("Requesting entities insertion values array is " + JSON.stringify(values));
+    }
+    var dateObj = new Date($("#code_date_edit").val() +" "+ $("#code_time_edit").val());
+    if(isDateObjectValid(dateObj)){
+        //we can edit the date time in the server by using the dateObj
+    }
 }

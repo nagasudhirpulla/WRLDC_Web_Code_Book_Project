@@ -158,3 +158,21 @@ function getTimeString(dateObj) {
     dateObj = hrs + ":" + mins;
     return dateObj;
 }
+
+function isDateObjectValid(dateObj) {
+    if (Object.prototype.toString.call(dateObj) === "[object Date]") {
+        // it is a date
+        if (isNaN(dateObj.getTime())) {  // d.valueOf() could also work
+            // date is not valid
+            return false;
+        }
+        else {
+            // date is valid
+            return true;
+        }
+    }
+    else {
+        // not a date
+        return false;
+    }
+}
