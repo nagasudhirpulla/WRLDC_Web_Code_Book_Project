@@ -3,6 +3,7 @@ function setUpGrid(data, itemMetaDataFunctionFactory) {
     var gridElId = "#myGrid";
     var createGridColumns = function (keys) {
         var columns = [];
+        keys = findAndRemoveFromArray(keys, 'is_cancelled');
         for (var i = 0; i < keys.length; i++) {
             columns.push({
                 id: i,
@@ -20,10 +21,10 @@ function setUpGrid(data, itemMetaDataFunctionFactory) {
             }
             if (keys[i] == 'time' || keys[i] == 'codetime') {
                 columns[i].formatter = function (row, cell, value, columnDef, dataContext) {
-                    if(value == "null" || value == null || value == ""){
+                    if (value == "null" || value == null || value == "") {
                         return "";
                     }
-                    else{
+                    else {
                         return getDateTimeString(new Date(value));
                     }
                 };
