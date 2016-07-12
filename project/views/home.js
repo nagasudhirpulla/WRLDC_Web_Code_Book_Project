@@ -412,7 +412,7 @@ function addButtonColumns(data) {
 }
 
 function editCodeOfRow(row) {
-    console.log("Button of row " + row + " pressed!!!");
+    console.log("Edit button of row " + row + " pressed!!!");
     if (mGrid.getData()[row]['id']) {
         populateEditCodeUI(mGrid.getData()[row]['id']);
     }
@@ -440,7 +440,7 @@ function populateEditCodeUI(recordId) {
                 console.log("get code couldn't be loaded from server, Error: " + JSON.stringify(data.Error));
                 $("#edit_dialog").dialog("close");
             } else {
-                console.log("The code issued is " + JSON.stringify(data.codes[0]));
+                console.log("The Edit code data is " + JSON.stringify(data.codes[0]));
                 var codeObj = data.codes[0];
                 $("#code_edit_span").text(codeObj.id + " / " + codeObj.code);
                 $("#category_select_edit").val(codeObj.categoryId);
@@ -483,7 +483,7 @@ function populateEditCodeUI(recordId) {
 
 function editCode() {
     var main_code = $("#code_edit_span").text().split("/")[0].trim();
-    var is_cancelled = document.getElementById('is_cancelled_edit_chkbox').checked?1:0;
+    var is_cancelled = document.getElementById('is_cancelled_edit_chkbox').checked ? 1 : 0;
     var isOtherCodesRequired = true;
     var desc = document.getElementById("code_description_input_edit").value;
     var cat_sel = document.getElementById("category_select_edit");
@@ -498,10 +498,10 @@ function editCode() {
         isOtherCodesRequired = false;
     }
     //getting values for editing other rldc codes
+    var mainCodesArray = [];
+    var rldcsIdsArray = [];
+    var otherCodesArray = [];
     if (isOtherCodesRequired) {
-        var mainCodesArray = [];
-        var rldcsIdsArray = [];
-        var otherCodesArray = [];
         for (var i = 0; i < mRldcIdsArray.length; i++) {
             if (mRldcIdsArray[i].name == "NLDC" && nl_code.trim().length != 0) {
                 mainCodesArray.push(main_code);
@@ -533,10 +533,46 @@ function editCode() {
             mainCodesArrayForReqEnts.push(main_code);
         }
         var ReqEntsValues = {code_ids: mainCodesArrayForReqEnts, entity_ids: request_entities_ids_array};//[main_code_id, requesting_entity_id]
-        console.log("Requesting entities insertion values array is " + JSON.stringify(values));
+        //console.log("Requesting entities insertion values array is " + JSON.stringify(ReqEntsValues));
     }
-    var dateObj = new Date($("#code_date_edit").val() +" "+ $("#code_time_edit").val());
-    if(isDateObjectValid(dateObj)){
+    var dateObj = new Date($("#code_date_edit").val() + " " + $("#code_time_edit").val());
+    var dateString = "";
+    if (isDateObjectValid(dateObj)) {
         //we can edit the date time in the server by using the dateObj
+        dateString = getDBDateTimeString(dateObj);
     }
+    var ajaxData = {
+        record_id: main_code,
+        is_cancelled: is_cancelled,
+        rldc_ids: rldcsIdsArray,
+        other_codes: otherCodesArray,
+        cat: cat_id,
+        elem_id: null,
+        req_entity_ids: request_entities_ids_array,
+        desc: desc,
+        code_time: dateString
+    };
+    console.log("Edit code ajax data is " + JSON.stringify(ajaxData));
+    $.ajax({
+        //create code through post request
+        url: "http://localhost:3000/api/codes/",
+        type: "PUT",
+        data: ajaxData,
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            if (data["Error"]) {
+                toastr["warning"]("Code couldn't be updated\nTry Again... ");
+                console.log("Code couldn't be updated, Error: " + JSON.stringify(data.Error));
+            } else {
+                toastr["success"]("Code updated");
+                console.log("The code id updated is " + data["updated_code"]);
+                //Refresh the codes list after 0.5 seconds
+                window.setTimeout(getDisplayCodes, 500);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
 }

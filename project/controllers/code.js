@@ -60,15 +60,17 @@ router.post('/', function (req, res) {
 });
 
 router.put('/', function (req, res) {
+    console.log("The code update request body is " + JSON.stringify(req.body) + "\n");
+    var record_id = req.body["record_id"];
     var is_cancelled = req.body["is_cancelled"];
-    var rldc_ids = req.body["values[rldc_ids][]"];
-    var rldc_codes = req.body["values[codes][]"];
+    var rldc_ids = req.body["rldc_ids[]"];
+    var rldc_codes = req.body["other_codes[]"];
     var cat = req.body["cat"];
     var elemId = req.body["element_id"];
-    var entity_ids = req.body["values[entity_ids][]"];
+    var entity_ids = req.body["req_entity_ids[]"];
     var desc = req.body["desc"];
-    var time = req.body["time"];
-
+    var code_time = req.body["code_time"];
+    res.json({'updated_code': record_id});
 });
 
 

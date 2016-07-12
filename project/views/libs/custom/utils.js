@@ -99,6 +99,33 @@ function searchSelectForText(selectEl, text) {
     return 1;
 }
 
+function getDBDateTimeString(dateObj) {
+    var dd = dateObj.getDate();
+    var mm = dateObj.getMonth() + 1; //January is 0!
+    var yyyy = dateObj.getFullYear();
+    var hrs = dateObj.getHours();
+    var mins = dateObj.getMinutes();
+    var secs = dateObj.getSeconds();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    if (hrs < 10) {
+        hrs = '0' + hrs;
+    }
+    if (mins < 10) {
+        mins = '0' + mins;
+    }
+    if (secs < 10) {
+        secs = '0' + secs;
+    }
+    dateObj = yyyy + '-' + mm + '-' + dd + " " + hrs + ":" + mins + ":" + secs;
+    return dateObj;
+}
+
 function getDateTimeString(dateObj) {
     var dd = dateObj.getDate();
     var mm = dateObj.getMonth() + 1; //January is 0!
