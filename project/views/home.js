@@ -35,11 +35,30 @@ function onDomComplete() {
     getDisplayCodes(true);
     $.ajax({
         //fetch categories from sever
+        url: "http://localhost:3000/api/codes/code_count",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            //toastr["info"]("Categories fetch result is " + JSON.stringify(data.categories));
+            if (data["Error"]) {
+                createPagination(1000);
+            }
+            console.log("Total codes in the database are " + JSON.stringify(data.count));
+            createPagination(data.count);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+            createPagination(1000);
+        }
+    });
+    $.ajax({
+        //fetch categories from sever
         url: "http://localhost:3000/api/categories/",
         type: "GET",
         dataType: "json",
         success: function (data) {
-            toastr["info"]("Categories fetch result is " + JSON.stringify(data.categories));
+            //toastr["info"]("Categories fetch result is " + JSON.stringify(data.categories));
+            console.log("Categories fetch result is " + JSON.stringify(data.categories));
             fillCategoriesList(data.categories);
             //alert("Categories get fetch result is " + JSON.stringify(data));
         },
@@ -54,7 +73,8 @@ function onDomComplete() {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            toastr["info"]("Entities get fetch result is " + JSON.stringify(data.entities));
+            //toastr["info"]("Entities get fetch result is " + JSON.stringify(data.entities));
+            console.log("Entities get fetch result is " + JSON.stringify(data.entities));
             fillEntitiesList(data.entities);
             fillRequestedList(data.entities);
             //alert("Entities get fetch result is " + JSON.stringify(data));
@@ -87,13 +107,28 @@ function onDomComplete() {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            toastr["info"]("Rldcs get fetch result is " + JSON.stringify(data.rldcs));
+            //toastr["info"]("Rldcs get fetch result is " + JSON.stringify(data.rldcs));
+            console.log("Rldcs get fetch result is " + JSON.stringify(data.rldcs));
             fillRldcsList(data.rldcs);
             //alert("Rldcs get fetch result is " + JSON.stringify(data));
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
         }
+    });
+}
+
+function createPagination(records) {
+    var nPages = records / 100;
+    $(function () {
+        $('#pagination-list').pagination({
+            items: records,
+            itemsOnPage: 100,
+            onPageClick: function (pageNumber, event) {
+                event.preventDefault();
+                getDisplayCodes(false, (pageNumber - 1) * 100);
+            }
+        });
     });
 }
 
@@ -370,7 +405,7 @@ function toastCode(new_code_id) {
     });
 }
 
-function getDisplayCodes(recreate) {
+function getDisplayCodes(recreate, offset) {
     var itemMetaDataFunctionFactory = function (data) {
         return function (row) {
             if (data && data[row] && data[row]['is_cancelled'] && data[row]['is_cancelled'] == 1) {
@@ -380,9 +415,13 @@ function getDisplayCodes(recreate) {
             }
         };
     };
+    var offSetString = "";
+    if (offset && !isNaN(Number(offset))) {
+        offSetString = "?offset=" + offset;
+    }
     $.ajax({
         //create code through post request
-        url: "http://localhost:3000/api/codes/fordisplay/",
+        url: "http://localhost:3000/api/codes/fordisplay" + offSetString,
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -428,7 +467,7 @@ function editCodeOfRow(row) {
     }
 }
 
-function closeDialog(){
+function closeDialog() {
     $("#edit_dialog").dialog("close");
 }
 

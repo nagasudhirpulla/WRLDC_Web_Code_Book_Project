@@ -51,3 +51,11 @@
     position: absolute;
     right: 0;
 }
+
+.chosen-container.chosen-container-multi {
+    width: 350px !important; /* or any value that fits your needs */
+}
+
+.page-link{
+    text-decoration: none;
+}

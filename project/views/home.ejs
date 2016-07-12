@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+    <link type="text/css" rel="stylesheet" href="./libs/simplePagination.css"/>
     <link href="libs/toastr.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="./home.css">
     <link rel="stylesheet" type="text/css" href="./custom-slick.css">
@@ -11,182 +12,188 @@
     <link rel="stylesheet" href="./libs/slickgridlibs/plugins/css/plugins-excel-style.css" type="text/css"/>
 </head>
 <body>
-<div style="border: 1px solid darkslategray; padding: 10px">
-    <h1>Web Code Book</h1>
+<div style="margin: 0 20px 0 20px">
+    <div style="border: 0px solid darkslategray;padding: 0 0 0 10px;">
+        <h1>Web Code Book</h1>
 
-    <div style="width: 100%;text-align:center">
-        <div class="code_creation_div" style="display: inline-block;text-align:left">
-            <div class="code_create_div_column_float_left">
-                <table>
-                    <tr>
-                        <td><span>NL - </span>
-                        <td><input type="text" id="nl_code"></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span>NR - </span>
-                        <td><input type="text" id="nr_code"></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span>ER - </span>
-                        <td><input type="text" id="er_code"></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span>SR - </span>
-                        <td><input type="text" id="sr_code"></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span>NER - </span>
-                        <td><input type="text" id="ner_code"></td>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="code_create_div_column_float_left">
-                <span>Category</span><br><br>
-                <select name="category" id="category_select">
-                    <option value="">Other</option>
-                </select>
-            </div>
+        <div style="width: 100%;text-align:center">
+            <div class="code_creation_div" style="display: inline-block;text-align:left">
+                <div class="code_create_div_column_float_left">
+                    <table>
+                        <tr>
+                            <td><span>NL - </span>
+                            <td><input type="text" id="nl_code"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>NR - </span>
+                            <td><input type="text" id="nr_code"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>ER - </span>
+                            <td><input type="text" id="er_code"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>SR - </span>
+                            <td><input type="text" id="sr_code"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>NER - </span>
+                            <td><input type="text" id="ner_code"></td>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="code_create_div_column_float_left">
+                    <span>Category</span><br><br>
+                    <select name="category" id="category_select">
+                        <option value="">Other</option>
+                    </select>
+                </div>
 
 
-            <div id="element_selector_div" class="code_create_div_column_float_left">
-                <button id="element_selector_button">Element Selector</button>
-                <br><br>
-                <span>Requested By</span><br>
-                <select data-placeholder="Add requesting Entities..." name="request_entities_select"
-                        id="request_entities_select" class="chosen-select" multiple style="width:350px;">
-                    <option value="">Maharashtra</option>
-                    <option value="">ghjghj</option>
-                    <option value="">kjhjkhkjhk</option>
-                </select>
+                <div id="element_selector_div" class="code_create_div_column_float_left">
+                    <button id="element_selector_button">Element Selector</button>
+                    <br><br>
+                    <span>Requested By</span><br>
+                    <select data-placeholder="Add requesting Entities..." name="request_entities_select"
+                            id="request_entities_select" class="chosen-select" multiple style="width:350px">
+                        <option value="">Maharashtra</option>
+                        <option value="">ghjghj</option>
+                        <option value="">kjhjkhkjhk</option>
+                    </select>
+                </div>
+                <input type="text" id="code_description_input" placeholder="Code Description"
+                       class="code_create_div_column_float_left">
+                <button id="get_code_button" class="code_create_div_column_float_left" onclick="createCode()">Get Code
+                </button>
+                <br>
             </div>
-            <input type="text" id="code_description_input" placeholder="Code Description"
-                   class="code_create_div_column_float_left">
-            <button id="get_code_button" class="code_create_div_column_float_left" onclick="createCode()">Get Code
-            </button>
-            <br>
         </div>
+        <button id="month_start_button" onclick="month_start_button_click()">GetZeroCodeForMonthStart</button>
     </div>
-    <button id="month_start_button" onclick="month_start_button_click()">GetZeroCodeForMonthStart</button>
-</div>
-<br>
-
-<div id="codes_display_div" style="margin-right:20px;margin-left:20px;z-index: -2">
-    <h2>Codes</h2>
-
-    <div id="myGrid" style="height:400px;border: 1px solid #6CD89D"></div>
     <br>
-</div>
 
-<div style="border: 1px solid darkslategray;padding: 10px;display:none">
-    <h1>Entity Selector</h1>
+    <div id="codes_display_div" style="margin-right:20px;margin-left:20px;z-index: -2">
+        <h2>Codes</h2>
 
-    <div style="width: 100%;text-align:center">
-        <div class="entity_selector_div" style="display: inline-block;text-align:left">
-            <button class="entity_selector_div_column_float_left" id="clear_entity_checks_button">Clear Checkboxes
-            </button>
+        <div id="myGrid" style="height:500px;border: 1px solid #008641"></div>
+        <br>
+        <ul id="pagination-list"></ul>
+    </div>
 
-            <div id="entity_selector_div" class="entity_selector_div_column_float_left">
-                <ul class="scrollable_ul" style="height: 100px" id="entity_selector">
-                    <li><input type="checkbox" name="" id="">Maharashtra</li>
-                    <li><input type="checkbox" name="" id="">Gujarat</li>
-                    <li><input type="checkbox" name="" id="">Chhattisgarh</li>
-                </ul>
+    <div style="border: 1px solid darkslategray;padding: 10px;display:none">
+        <h1>Entity Selector</h1>
+
+        <div style="width: 100%;text-align:center">
+            <div class="entity_selector_div" style="display: inline-block;text-align:left">
+                <button class="entity_selector_div_column_float_left" id="clear_entity_checks_button">Clear Checkboxes
+                </button>
+
+                <div id="entity_selector_div" class="entity_selector_div_column_float_left">
+                    <ul class="scrollable_ul" style="height: 100px" id="entity_selector">
+                        <li><input type="checkbox" name="" id="">Maharashtra</li>
+                        <li><input type="checkbox" name="" id="">Gujarat</li>
+                        <li><input type="checkbox" name="" id="">Chhattisgarh</li>
+                    </ul>
+                </div>
+
+                <button id="commit_entity_checks_button" class="entity_selector_div_column_float_left">Commit Changes
+                </button>
+
             </div>
-
-            <button id="commit_entity_checks_button" class="entity_selector_div_column_float_left">Commit Changes
-            </button>
-
         </div>
     </div>
-</div>
 
-<div style="border: 1px solid darkslategray;padding: 10px;" id="edit_dialog">
-    <h1>Edit Code <span id="code_edit_span">xyz</span></h1>
+    <div style="border: 1px solid darkslategray;padding: 10px;display: none" id="edit_dialog">
+        <h1>Edit Code <span id="code_edit_span">xyz</span></h1>
 
-    <div style="width: 100%;text-align:center">
-        <div class="code_creation_div" style="display: inline-block;text-align:left">
-            <div class="code_create_div_column_float_left">
-                <label style="margin-right: 30px"><input type="checkbox" value="CancelCode"
-                                                         id="is_cancelled_edit_chkbox"> CancelCode</label><br>
+        <div style="width: 100%;text-align:center">
+            <div class="code_creation_div" style="display: inline-block;text-align:left">
+                <div class="code_create_div_column_float_left">
+                    <label style="margin-right: 30px"><input type="checkbox" value="CancelCode"
+                                                             id="is_cancelled_edit_chkbox"> CancelCode</label><br>
+                </div>
+                <div class="code_create_div_column_float_left">
+                    <table>
+                        <tr>
+                            <td><span>NL - </span>
+                            <td><input type="text" id="nl_code_edit"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>NR - </span>
+                            <td><input type="text" id="nr_code_edit"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>ER - </span>
+                            <td><input type="text" id="er_code_edit"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>SR - </span>
+                            <td><input type="text" id="sr_code_edit"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>NER - </span>
+                            <td><input type="text" id="ner_code_edit"></td>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="code_create_div_column_float_left">
+                    <span>Category</span><br><br>
+                    <select name="category" id="category_select_edit">
+                        <option value="">Other</option>
+                    </select>
+                </div>
+                <div id="element_selector_div_edit" class="code_create_div_column_float_left">
+                    <button id="element_selector_button_edit">Element Selector</button>
+                    <br><br>
+                    <span>Requested By</span><br>
+                    <select data-placeholder="Add requesting Entities..." name="request_entities_select"
+                            id="request_entities_select_edit" class="chosen-select" multiple style="width:350px">
+                        <option value="">Maharashtra</option>
+                        <option value="">ghjghj</option>
+                        <option value="">kjhjkhkjhk</option>
+                    </select>
+                </div>
+                <input type="text" id="code_description_input_edit" placeholder="Code Description"
+                       class="code_create_div_column_float_left">
             </div>
-            <div class="code_create_div_column_float_left">
-                <table>
-                    <tr>
-                        <td><span>NL - </span>
-                        <td><input type="text" id="nl_code_edit"></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span>NR - </span>
-                        <td><input type="text" id="nr_code_edit"></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span>ER - </span>
-                        <td><input type="text" id="er_code_edit"></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span>SR - </span>
-                        <td><input type="text" id="sr_code_edit"></td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span>NER - </span>
-                        <td><input type="text" id="ner_code_edit"></td>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="code_create_div_column_float_left">
-                <span>Category</span><br><br>
-                <select name="category" id="category_select_edit">
-                    <option value="">Other</option>
-                </select>
-            </div>
-            <div id="element_selector_div_edit" class="code_create_div_column_float_left">
-                <button id="element_selector_button_edit">Element Selector</button>
-                <br><br>
-                <span>Requested By</span><br>
-                <select data-placeholder="Add requesting Entities..." name="request_entities_select"
-                        id="request_entities_select_edit" class="chosen-select" multiple style="width:350px">
-                    <option value="">Maharashtra</option>
-                    <option value="">ghjghj</option>
-                    <option value="">kjhjkhkjhk</option>
-                </select>
-            </div>
-            <input type="text" id="code_description_input_edit" placeholder="Code Description"
-                   class="code_create_div_column_float_left">
-        </div>
-        <br>
+            <br>
 
-        <div style="display: inline-block;width: 100%">
-            <span>DATE - </span><input type="date" id="code_date_edit">
-            <span>TIME - </span><input type="time" id="code_time_edit">
-        </div>
-        <br>
+            <div style="display: inline-block;width: 100%">
+                <span>DATE - </span><input type="date" id="code_date_edit">
+                <span>TIME - </span><input type="time" id="code_time_edit">
+            </div>
+            <br>
 
-        <div style="display: inline-block;width: 100%">
-            <div style="display: inline-block;text-align: left;float: left;margin-left: 30px">
-                <button>Create Revival Code</button>
+            <div style="display: inline-block;width: 100%">
+                <div style="display: inline-block;text-align: left;float: left;margin-left: 30px">
+                    <button>Create Revival Code</button>
+                </div>
+                <div style="display: inline-block;text-align: left;float: right;margin-right: 40px">
+                    <button id="edit_code_cancel_button" style="margin-right: 20px" onclick="closeDialog()">Cancel
+                        Changes
+                    </button>
+                    <button id="edit_code_commit_button" onclick="editCode()">Commit Changes</button>
+                </div>
             </div>
-            <div style="display: inline-block;text-align: left;float: right;margin-right: 40px">
-                <button id="edit_code_cancel_button" style="margin-right: 20px" onclick="closeDialog()">Cancel Changes</button>
-                <button id="edit_code_commit_button" onclick="editCode()">Commit Changes</button>
+            <div style="display: inline-block;font-weight: bold;width: 100%">
+                <span>Note: The date display format is MM-dd-YYYY</span>
             </div>
-        </div>
-        <div style="display: inline-block;font-weight: bold;width: 100%">
-            <span>Note: The date display format is MM-dd-YYYY</span>
         </div>
     </div>
 </div>
 <script src="./libs/jquery/jquery-1.7.min.js"></script>
 <script src="libs/chosen.jquery.min.js"></script>
+<script src="libs/jquery.simplePagination.js"></script>
 <!--<script src="example.js"></script>-->
 
 <script src="./libs/slickgridlibs/firebugx.js"></script>

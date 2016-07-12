@@ -27,16 +27,30 @@ exports.create = function (cat_id, desc, elem_id, done) {
     });
 };
 
-exports.getForDisplay = function (id, done) {
+exports.getForDisplay = function (id, done, offset) {
     var whereClause = "";
+    var LimitClause = "LIMIT 100";
     if (id && !isNaN(id)) {//qualifies if id != "" and id!=null and id is a number
         whereClause = "WHERE codes.id = " + id + " ";
     }
-    var sql = "SELECT codes.id ,codes.code, codes.time, codes.description, codes.is_cancelled, cats.name AS category, elems.name AS element, GROUP_CONCAT(DISTINCT CONCAT(oc.name, ' ', oc.code) SEPARATOR ', ') AS othercodes, GROUP_CONCAT(DISTINCT crs.name SEPARATOR ', ') AS requestedby, times.time AS codetime FROM codes LEFT OUTER JOIN (SELECT optional_codes.id, optional_codes.code_id, optional_codes.code, rldcs.name FROM optional_codes INNER JOIN rldcs ON rldcs.id = optional_codes.rldc_id) AS oc ON codes.id = oc.code_id LEFT OUTER JOIN (SELECT code_requests.code_id, entities.name FROM code_requests INNER JOIN entities ON code_requests.entity_id = entities.id) AS crs ON codes.id = crs.code_id LEFT OUTER JOIN categories AS cats ON codes.category_id = cats.id LEFT OUTER JOIN elements AS elems ON codes.element_id = elems.id LEFT OUTER JOIN times ON codes.id = times.code_id " + whereClause + "GROUP BY codes.id ORDER BY codes.time DESC";
+    if (offset && !isNaN(Number(offset))) {//qualifies if id != "" and id!=null and id is a number
+        LimitClause = "LIMIT " + Number(offset) + ",100";
+    }
+    var sql = "SELECT codes.id ,codes.code, codes.time, codes.description, codes.is_cancelled, cats.name AS category, elems.name AS element, GROUP_CONCAT(DISTINCT CONCAT(oc.name, ' ', oc.code) SEPARATOR ', ') AS othercodes, GROUP_CONCAT(DISTINCT crs.name SEPARATOR ', ') AS requestedby, times.time AS codetime FROM codes LEFT OUTER JOIN (SELECT optional_codes.id, optional_codes.code_id, optional_codes.code, rldcs.name FROM optional_codes INNER JOIN rldcs ON rldcs.id = optional_codes.rldc_id) AS oc ON codes.id = oc.code_id LEFT OUTER JOIN (SELECT code_requests.code_id, entities.name FROM code_requests INNER JOIN entities ON code_requests.entity_id = entities.id) AS crs ON codes.id = crs.code_id LEFT OUTER JOIN categories AS cats ON codes.category_id = cats.id LEFT OUTER JOIN elements AS elems ON codes.element_id = elems.id LEFT OUTER JOIN times ON codes.id = times.code_id " + whereClause + "GROUP BY codes.id ORDER BY codes.time DESC " + LimitClause;
     //console.log("sql for get single is " + sql);
     db.get().query(sql, function (err, rows) {
         if (err) return done(err);
         done(null, rows);
+    });
+};
+
+exports.getCount = function (done) {
+    var sql = "SELECT COUNT(*) AS count FROM codes;";
+    //console.log("sql for get single is " + sql);
+    db.get().query(sql, function (err, result) {
+        if (err) return done(err);
+        //console.log("get code count result is "+JSON.stringify(result));
+        done(null, result[0]['count']);
     });
 };
 

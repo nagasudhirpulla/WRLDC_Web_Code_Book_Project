@@ -3,11 +3,21 @@ var router = express.Router();
 var Code = require('../models/code.js');
 
 router.get('/fordisplay', function (req, res) {
+    var offset = req.query["offset"];
     Code.getForDisplay(null, function (err, rows) {
         if (err) {
             res.json({'Error': err});
         }
         res.json({'codes': rows});
+    }, offset);
+});
+
+router.get('/code_count', function (req, res) {
+    Code.getCount(function (err, count) {
+        if (err) {
+            res.json({'Error': err});
+        }
+        res.json({'count': count});
     });
 });
 
