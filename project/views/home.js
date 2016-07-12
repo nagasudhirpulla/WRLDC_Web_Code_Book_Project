@@ -448,6 +448,8 @@ function populateEditCodeUI(recordId) {
                 $("#is_cancelled_edit_chkbox").attr('checked', codeObj.is_cancelled != 0 ? true : false);
                 if (codeObj.requestedbyIds) {
                     $("#request_entities_select_edit").val(codeObj.requestedbyIds.split(", ").map(Number)).trigger("chosen:updated");
+                } else {
+                    $("#request_entities_select_edit").val([]).trigger("chosen:updated");
                 }
                 var otherCodes = [];
                 if (codeObj.othercodes) {
@@ -467,7 +469,7 @@ function populateEditCodeUI(recordId) {
                     }
                 }
                 //set code time
-                if(codeObj.codetime != null && codeObj.codetime != "" && codeObj.codetime != "null"){
+                if (codeObj.codetime != null && codeObj.codetime != "" && codeObj.codetime != "null") {
                     var code_time = new Date(codeObj.codetime);
                     $("#code_time_edit").val(getTimeString(code_time));
                     //set code date

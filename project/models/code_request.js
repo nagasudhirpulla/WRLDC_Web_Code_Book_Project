@@ -2,7 +2,7 @@ var db = require('../db.js');
 var SQLHelper = require('../helpers/sqlHelper');
 
 exports.create = function (entity_ids, code_ids, done) {
-    //TODO check the code for one entry and no entry values
+    //DONE check the code for one entry
     var tableName = "code_requests";
     var argNames = ["entity_id", "code_id"];
     var values = [entity_ids, code_ids];
