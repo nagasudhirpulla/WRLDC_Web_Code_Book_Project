@@ -467,10 +467,12 @@ function populateEditCodeUI(recordId) {
                     }
                 }
                 //set code time
-                var code_time = new Date(codeObj.codetime);
-                $("#code_time_edit").val(getTimeString(code_time));
-                //set code date
-                $("#code_date_edit").val(getDateString(code_time))
+                if(codeObj.codetime != null && codeObj.codetime != "" && codeObj.codetime != "null"){
+                    var code_time = new Date(codeObj.codetime);
+                    $("#code_time_edit").val(getTimeString(code_time));
+                    //set code date
+                    $("#code_date_edit").val(getDateString(code_time));
+                }
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {

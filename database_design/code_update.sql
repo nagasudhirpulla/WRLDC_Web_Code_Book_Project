@@ -1,6 +1,6 @@
 START TRANSACTION READ WRITE;
 
-UPDATE codes SET time=?,category_id=?,description=?,element_id=?,is_cancelled=? WHERE id=?;
+UPDATE codes SET category_id=?,description=?,element_id=?,is_cancelled=? WHERE id=?;
 
 DELETE FROM code_requests WHERE code_id=?;
 INSERT INTO code_requests(entity_id, code_id) VALUES (?,?);

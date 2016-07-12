@@ -40,7 +40,7 @@ exports.getDateTimeString = function (today) {
 };
 
 exports.getNextDateString = function (today, nDays) {
-    var tomorrow = new Date(today.getTime() + nDays*86400000 );
+    var tomorrow = new Date(today.getTime() + nDays * 86400000);
     var dd = tomorrow.getDate();
     var mm = tomorrow.getMonth() + 1; //January is 0!
     var yyyy = tomorrow.getFullYear();
@@ -66,3 +66,22 @@ exports.getNextDateString = function (today, nDays) {
     tomorrow = yyyy + '-' + mm + '-' + dd + " " + hrs + ":" + mins + ":" + secs;
     return tomorrow;
 };
+
+
+exports.isDateObjectValid = function (dateObj) {
+    if (Object.prototype.toString.call(dateObj) === "[object Date]") {
+        // it is a date
+        if (isNaN(dateObj.getTime())) {  // d.valueOf() could also work
+            // date is not valid
+            return false;
+        }
+        else {
+            // date is valid
+            return true;
+        }
+    }
+    else {
+        // not a date
+        return false;
+    }
+}

@@ -20,6 +20,7 @@ exports.createSQLInsertString = function (tableName, argNames, values) {
     }
     questionMarkString = questionMarkArray.join(','); //here we get "(?,?,?,?,?,?,?,?), (?,?,?,?,?,?,?,?), (?,?,?,?,?,?,?,?)"
     SQLQueryString += questionMarkString;
+    SQLQueryString += ";"; //clause completion semicolon
     /*console.log("SQLQUERYVALUES ARE " + SQLQueryValues.join(', '));
      console.log("SQLQUERYSTRING IS " + SQLQueryString);
      console.log("NUMARGS IS " + numArgs);

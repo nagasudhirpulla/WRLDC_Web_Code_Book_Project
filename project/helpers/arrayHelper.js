@@ -1,4 +1,3 @@
-var ArrayHelper = require('./arrayHelper.js');
 exports.createArrayFromSingleElement = function (elem, nCount) {
     var resultArray = new Array(nCount);
     for (var i = 0; i < nCount; i++) {
