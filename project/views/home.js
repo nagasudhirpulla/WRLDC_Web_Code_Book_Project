@@ -371,6 +371,15 @@ function toastCode(new_code_id) {
 }
 
 function getDisplayCodes(recreate) {
+    var itemMetaDataFunctionFactory = function (data) {
+        return function (row) {
+            if (data && data[row] && data[row]['is_cancelled'] && data[row]['is_cancelled'] == 1) {
+                return {
+                    "cssClasses": 'striked'
+                };
+            }
+        };
+    };
     $.ajax({
         //create code through post request
         url: "http://localhost:3000/api/codes/fordisplay/",
@@ -385,7 +394,7 @@ function getDisplayCodes(recreate) {
                 //console.log("Codes loaded for display are \n" + JSON.stringify(data.codes));
                 if (recreate) {
                     var gridData = addButtonColumns(data.codes);
-                    mGrid = setUpGrid(gridData);
+                    mGrid = setUpGrid(gridData, itemMetaDataFunctionFactory);
                     $(mGridElId).trigger($.extend({}, jQuery.Event("keydown"), {
                         keyCode: 65,
                         ctrlKey: true,
@@ -393,6 +402,7 @@ function getDisplayCodes(recreate) {
                     }));
                 } else {
                     var gridData = addButtonColumns(data.codes);
+                    gridData.getItemMetadata = itemMetaDataFunctionFactory(gridData);
                     mGrid.setData(gridData);
                     mGrid.render();
                 }
@@ -418,6 +428,10 @@ function editCodeOfRow(row) {
     }
 }
 
+function closeDialog(){
+    $("#edit_dialog").dialog("close");
+}
+
 function populateEditCodeUI(recordId) {
     $("#edit_dialog").dialog({
         bgiframe: true,
@@ -425,7 +439,12 @@ function populateEditCodeUI(recordId) {
         position: 'center',
         width: $(window).width() - 180,
         height: $(window).height() - 180,
-        modal: true
+        modal: true,
+        open: function () {
+            $('.ui-widget-overlay').bind('click', function () {
+                $('#edit_dialog').dialog('close');
+            })
+        }
     });
     //get the code values from server
     $.ajax({
@@ -455,6 +474,12 @@ function populateEditCodeUI(recordId) {
                 if (codeObj.othercodes) {
                     var otherCodes = codeObj.othercodes.split(', ');
                 }
+                //reset other rldc code fields
+                $("#nl_code_edit").val("");
+                $("#nr_code_edit").val("");
+                $("#er_code_edit").val("");
+                $("#sr_code_edit").val("");
+                $("#ner_code_edit").val("");
                 for (var i = 0; i < otherCodes.length; i++) {
                     if (otherCodes[i].indexOf("NLDC ") == 0) {
                         $("#nl_code_edit").val(otherCodes[i].substring(5));
@@ -474,6 +499,9 @@ function populateEditCodeUI(recordId) {
                     $("#code_time_edit").val(getTimeString(code_time));
                     //set code date
                     $("#code_date_edit").val(getDateString(code_time));
+                } else {
+                    $("#code_date_edit").val("");
+                    $("#code_time_edit").val("");
                 }
             }
         },
@@ -531,13 +559,11 @@ function editCode() {
         }
     }
     //editing the element is pending
-    if (request_entities_ids_array.length > 0) {
+    if (request_entities_ids_array && request_entities_ids_array.length > 0) {
         var mainCodesArrayForReqEnts = [];
         for (var i = 0; i < request_entities_ids_array.length; i++) {
             mainCodesArrayForReqEnts.push(main_code);
         }
-        var ReqEntsValues = {code_ids: mainCodesArrayForReqEnts, entity_ids: request_entities_ids_array};//[main_code_id, requesting_entity_id]
-        //console.log("Requesting entities insertion values array is " + JSON.stringify(ReqEntsValues));
     }
     var dateObj = new Date($("#code_date_edit").val() + " " + $("#code_time_edit").val());
     var dateString = "";
@@ -569,6 +595,7 @@ function editCode() {
                 toastr["warning"]("Code couldn't be updated\nTry Again... ");
                 console.log("Code couldn't be updated, Error: " + JSON.stringify(data.Error));
             } else {
+                $('#edit_dialog').dialog('close');
                 toastr["success"]("Code updated");
                 console.log("The code id updated is " + data["updated_code"]);
                 //Refresh the codes list after 0.5 seconds

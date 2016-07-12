@@ -3,6 +3,10 @@ var SQLHelper = require('../helpers/sqlHelper');
 
 exports.create = function (entity_ids, code_ids, done) {
     //DONE check the code for one entry
+    if (!(code_ids.constructor === Array)) {
+        code_ids = [[code_ids]];
+        entity_ids = [[entity_ids]];
+    }
     var tableName = "code_requests";
     var argNames = ["entity_id", "code_id"];
     var values = [entity_ids, code_ids];

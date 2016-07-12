@@ -1,5 +1,5 @@
 //TODO create the green bottom border for selected cell headers by attaching the selected-header class in the external overlays plugin which is not included
-function setUpGrid(data) {
+function setUpGrid(data, itemMetaDataFunctionFactory) {
     var gridElId = "#myGrid";
     var createGridColumns = function (keys) {
         var columns = [];
@@ -100,13 +100,7 @@ function setUpGrid(data) {
     //cell grid options for customization over
     var columns = createGridColumns(Object.keys(data[0]));
     //setting meta data for data array
-    data.getItemMetadata = function (row) {
-        if (data && data[row] && data[row]['is_cancelled'] && data[row]['is_cancelled'] == 1) {
-            return {
-                "cssClasses": 'striked'
-            };
-        }
-    };
+    data.getItemMetadata = itemMetaDataFunctionFactory(data);
     //Building the grid and configuring the grid
     grid = new Slick.Grid(gridElId, data, columns, options);
     grid.setSelectionModel(new Slick.CellSelectionModel());

@@ -1,5 +1,7 @@
 var db = require('../db.js');
 var SQLHelper = require('../helpers/sqlHelper');
+var DateHelper = require('../helpers/date.js');
+var ArrayHelper = require('../helpers/arrayHelper.js');
 
 exports.createExplicit = function (code, cat_id, desc, elem_id, done) {
     var tableName = "codes";
@@ -48,5 +50,49 @@ exports.getForEdit = function (id, done) {
     db.get().query(sql, function (err, rows) {
         if (err) return done(err);
         done(null, rows);
+    });
+};
+
+exports.update = function (record_id, is_cancelled, rldc_ids, rldc_codes, cat, elemId, entity_ids, desc, code_time, done) {
+    var SQLString = "START TRANSACTION READ WRITE;UPDATE codes SET category_id=?,description=?,element_id=?,is_cancelled=? WHERE id=?;";
+    var values = [cat, desc, elemId, is_cancelled, record_id];
+    if (rldc_ids && rldc_ids.length > 0 && rldc_ids.length == rldc_codes.length) {
+        if (!(rldc_ids.constructor === Array)) {
+            rldc_codes = [[rldc_codes]];
+            rldc_ids = [[rldc_ids]];
+        }
+        //include rldc ids update code
+        SQLString += "DELETE FROM optional_codes WHERE code_id=?;";
+        values = values.concat(record_id);
+        var rldc_codes_SQL = SQLHelper.createSQLInsertString("optional_codes", ["code_id", "rldc_id", "code"], [ArrayHelper.createArrayFromSingleElement(record_id, rldc_ids.length), rldc_ids, rldc_codes]);
+        SQLString += rldc_codes_SQL['SQLQueryString'];
+        values = values.concat(rldc_codes_SQL['SQLQueryValues']);
+    }
+    if (DateHelper.isDateObjectValid(new Date(code_time)) && code_time != "" && code_time != null && code_time != "null") {
+        //we have a valid datetime to update
+        var code_time_value = DateHelper.getDateTimeString(new Date(code_time));
+        SQLString += "DELETE FROM times WHERE code_id = ?;";
+        values = values.concat(record_id);
+        var code_time_SQL = SQLHelper.createSQLInsertString("times", ["code_id", "time"], [[record_id], [code_time_value]]);
+        SQLString += code_time_SQL['SQLQueryString'];
+        values = values.concat(code_time_SQL['SQLQueryValues']);
+    }
+    if (entity_ids && entity_ids.length > 0) {
+        if (!(entity_ids.constructor === Array)) {
+            entity_ids = [[entity_ids]];
+        }
+        //we have to update the requesting entity ids list
+        SQLString += "DELETE FROM code_requests WHERE code_id=?;";
+        values = values.concat(record_id);
+        var req_entities_SQL = SQLHelper.createSQLInsertString("code_requests", ["code_id", "entity_id"], [ArrayHelper.createArrayFromSingleElement(record_id, entity_ids.length), entity_ids]);
+        SQLString += req_entities_SQL['SQLQueryString'];
+        values = values.concat(req_entities_SQL['SQLQueryValues']);
+    }
+    SQLString += "COMMIT;";
+    console.log("The code update SQL is " + SQLString + "\n");
+    console.log("The code update SQL values are " + values + "\n");
+    db.get().query(SQLString, values, function (err, result) {
+        if (err) return done(err);
+        done(null, result);
     });
 };
