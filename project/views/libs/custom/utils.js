@@ -99,6 +99,17 @@ function searchSelectForText(selectEl, text) {
     return 1;
 }
 
+function setSelectByText(dropDown, textToFind) {
+    textToFind = textToFind.toLowerCase();
+    for (var i = 0; i < dropDown.options.length; i++) {
+        var optionText = dropDown.options[i].text.toLowerCase();
+        if (optionText === textToFind) {
+            dropDown.selectedIndex = i;
+            break;
+        }
+    }
+}
+
 function getDBDateTimeString(dateObj) {
     var dd = dateObj.getDate();
     var mm = dateObj.getMonth() + 1; //January is 0!

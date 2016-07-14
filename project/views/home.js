@@ -646,3 +646,24 @@ function editCode() {
         }
     });
 }
+
+function isEditDialogOpen() {
+    return $('#edit_dialog').dialog("isOpen");
+}
+
+function createRevivalCode() {
+    //check if edit dialog is open
+    if (!isEditDialogOpen()) {
+        return;
+    }
+    //TODO make the create code element selector equal to the edit code dialog element selector
+    //make the create code category to revive element
+    setSelectByText(document.getElementById('category_select'), 'revive element');
+    //make the requesting entities of create code equal to that of edit code dialog
+    $("#request_entities_select").val($("#request_entities_select_edit").val());
+    $("#request_entities_select").trigger("chosen:updated");
+    //make the code create description text as 'revive ' + elementOfEditCodeName
+    $('#code_description_input').val('Revive ');
+    //close the edit dialog box
+    return $('#edit_dialog').dialog("close");
+}
