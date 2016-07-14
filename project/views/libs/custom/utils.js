@@ -214,3 +214,13 @@ function isDateObjectValid(dateObj) {
         return false;
     }
 }
+function activateScrollToTopAndBottomButtons() {
+    $('#scrollToBottom').bind("click", function () {
+        $('html, body').animate({scrollTop: $(document).height()}, 500);
+        return false;
+    });
+    $('#scrollToTop').bind("click", function () {
+        $('html, body').animate({scrollTop: 0}, 500);
+        return false;
+    });
+}

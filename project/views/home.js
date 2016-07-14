@@ -26,6 +26,7 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 function onDomComplete() {
+    activateScrollToTopAndBottomButtons();
     $(mGridElId).on('mouseenter', ".slick-row", function () {
         $(this).addClass('row-hovered');
     }).on('mouseleave', ".slick-row", function () {

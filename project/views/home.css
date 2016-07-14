@@ -56,6 +56,14 @@
     width: 350px !important; /* or any value that fits your needs */
 }
 
-.page-link{
+.page-link {
     text-decoration: none;
+}
+
+#scrollToTop {
+
+}
+
+#scrollToBottom {
+
 }

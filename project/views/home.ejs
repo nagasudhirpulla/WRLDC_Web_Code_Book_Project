@@ -13,6 +13,9 @@
 </head>
 <body style='max-width:100%;overflow-x: hidden;'>
 <div style="margin: 0 20px 0 20px">
+    <div style="float: right;width: 50px;height: 50px">
+        <a href="javascript:;" id="scrollToBottom" style="font-size: 20pt">&#x2193;</a>
+    </div>
     <div style="border: 0px solid darkslategray;padding: 0 0 0 10px;">
         <h1>Web Code Book</h1>
 
@@ -75,10 +78,8 @@
         </div>
         <button id="month_start_button" onclick="month_start_button_click()">GetZeroCodeForMonthStart</button>
     </div>
-    <br>
-
     <div id="codes_display_div" style="margin-right:20px;margin-left:20px;z-index: -2">
-        <h2>Codes</h2>
+        <h1>Codes</h1>
 
         <div id="myGrid" style="height:500px;border: 1px solid #008641"></div>
         <br>
@@ -189,6 +190,9 @@
                 <span>Note: The date display format is MM-dd-YYYY</span>
             </div>
         </div>
+    </div>
+    <div style="float: right;width: 50px;height: 50px">
+        <a href="javascript:;" id="scrollToTop" style="font-size: 20pt">&#x2191;</a>
     </div>
 </div>
 <div id='footer'
