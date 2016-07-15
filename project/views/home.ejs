@@ -78,6 +78,16 @@
         </div>
         <button id="month_start_button" onclick="month_start_button_click()">GetZeroCodeForMonthStart</button>
     </div>
+    <div id="code_filter_div"
+         style="margin-right:20px;margin-left:20px;margin-top:15px;z-index: -2;border: 1px solid darkslategray;padding-left: 20px;padding-bottom: 20px">
+        <h2 style="font-style: italic">FILTERS</h2>
+        <span style="margin-right: 20px">Get codes on <input type="date" id="filter_date"></span>
+        <input style="margin-right: 20px" type="text" id="filter_search_text" placeholder="Search text...">
+        <button style="margin-right: 20px" id="filter_element_selector_button">Element Selector</button>
+        <button class="ui-button ui-widget">
+            <span style="display:inline-block" class="ui-icon ui-icon-search" id="filter_search_button"></span>Search
+        </button>
+    </div>
     <div id="codes_display_div" style="margin-right:20px;margin-left:20px;z-index: -2">
         <h1>Codes</h1>
 
