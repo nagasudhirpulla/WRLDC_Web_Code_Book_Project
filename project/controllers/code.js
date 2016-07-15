@@ -21,6 +21,18 @@ router.get('/code_count', function (req, res) {
     });
 });
 
+router.get('/by_filter', function (req, res) {
+    var offset = req.query["offset"];
+    var filterTxt = req.query["filter_txt"];
+    var filter_date = req.query["filter_date"];
+    Code.getByFilter(filterTxt, filter_date, offset, function (err, rows) {
+        if (err) {
+            res.json({'Error': err});
+        }
+        res.json({'codes': rows});
+    }, offset);
+});
+
 router.get('/', function (req, res) {
     //console.log("get req params for get single are " + JSON.stringify(req.query));
     Code.getForEdit(req.query.id, function (err, rows) {

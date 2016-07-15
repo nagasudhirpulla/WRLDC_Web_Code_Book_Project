@@ -1,6 +1,7 @@
 var mRldcIdsArray = [];
 var mGrid; //The cell grid object.
 var mGridElId = "#myGrid";
+var mSearchObj = {txt: null, date: null, elemId: null};
 document.onreadystatechange = function () {
     if (document.readyState == "interactive") {
 
@@ -120,13 +121,15 @@ function onDomComplete() {
 }
 
 function createPagination(records) {
-    var nPages = records / 100;
+    //var nPages = records / 100;
     $(function () {
         $('#pagination-list').pagination({
             items: records,
             itemsOnPage: 100,
             onPageClick: function (pageNumber, event) {
-                event.preventDefault();
+                if (event && event.preventDefault) {
+                    event.preventDefault();
+                }
                 getDisplayCodes(false, (pageNumber - 1) * 100);
             }
         });
@@ -211,7 +214,6 @@ function fillEntitiesList(entsArray) {
  }
  */
 
-
 function createCode() {
     //http://stackoverflow.com/questions/17112852/get-the-new-record-primary-key-id-from-mysql-insert-query
     var isOtherCodesRequired = true;
@@ -251,7 +253,7 @@ function createCode() {
                     createRequestingEntities(data.new_code, request_entities_ids_array);
                 }
                 //Refresh the codes list after 0.5 seconds
-                window.setTimeout(getDisplayCodes, 500);
+                window.setTimeout(selectPaginationPage, 500);
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -367,7 +369,7 @@ function createZeroCode() {
                 console.log("The code id issued is " + JSON.stringify(data.new_code));
                 toastCode(data.new_code);
                 //Refresh the codes list after 0.5 seconds
-                window.setTimeout(getDisplayCodes, 500);
+                window.setTimeout(selectPaginationPage, 500);
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -406,6 +408,17 @@ function toastCode(new_code_id) {
     });
 }
 
+function selectPaginationPage(pageNumber) {
+    pageNumber = Number(pageNumber);
+    if (isNaN(pageNumber)) {
+        pageNumber = 1;
+    }
+    $(function () {
+        $('#pagination-list').pagination('selectPage', pageNumber);
+        $('#pagination-list').pagination('redraw');
+    });
+}
+
 function getDisplayCodes(recreate, offset) {
     var itemMetaDataFunctionFactory = function (data) {
         return function (row) {
@@ -416,13 +429,35 @@ function getDisplayCodes(recreate, offset) {
             }
         };
     };
+    var url = "http://localhost:3000/api/codes/by_filter";
     var offSetString = "";
     if (offset && !isNaN(Number(offset))) {
-        offSetString = "?offset=" + offset;
+        offSetString = "offset=" + offset;
+    }
+    var filterString = "";
+    if (document.getElementById('filter_search_text').value.trim() != '') {
+        filterString = "filter_txt=" + document.getElementById('filter_search_text').value.trim();
+    }
+    var filterDateString = '';
+    if (document.getElementById('filter_date').value != '') {
+        filterDateString = "filter_date=" + document.getElementById('filter_date').value;
+    }
+    if (offSetString + filterString + filterDateString != "") {
+        var searchStrings = [];
+        if (offSetString != "") {
+            searchStrings.push(offSetString);
+        }
+        if (filterString != "") {
+            searchStrings.push(filterString);
+        }
+        if (filterDateString != "") {
+            searchStrings.push(filterDateString);
+        }
+        url = url + "?" + searchStrings.join("&");
     }
     $.ajax({
         //create code through post request
-        url: "http://localhost:3000/api/codes/fordisplay" + offSetString,
+        url: url,
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -431,6 +466,12 @@ function getDisplayCodes(recreate, offset) {
                 toastr["warning"]("Codes couldn't be loaded from server\nTry Again... ");
                 console.log("Codes couldn't be loaded from server, Error: " + JSON.stringify(data.Error));
             } else {
+                /*
+                 //update the number of records in the pagination
+                 $(function () {
+                 $('#pagination-list').pagination('updateItems', data.codes.length);
+                 });
+                 */
                 //console.log("Codes loaded for display are \n" + JSON.stringify(data.codes));
                 if (recreate) {
                     var gridData = addButtonColumns(data.codes);
@@ -639,7 +680,7 @@ function editCode() {
                 toastr["success"]("Code updated");
                 console.log("The code id updated is " + data["updated_code"]);
                 //Refresh the codes list after 0.5 seconds
-                window.setTimeout(getDisplayCodes, 500);
+                window.setTimeout(selectPaginationPage, 500);
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -667,4 +708,13 @@ function createRevivalCode() {
     $('#code_description_input').val('Revive ');
     //close the edit dialog box
     return $('#edit_dialog').dialog("close");
+}
+
+function clearFilters() {
+    //clear date
+    document.getElementById('filter_date').value = '';
+    //clear search text
+    document.getElementById('filter_search_text').value = '';
+    //do the search by clicking the search button
+    document.getElementById('filter_search_button').click();
 }

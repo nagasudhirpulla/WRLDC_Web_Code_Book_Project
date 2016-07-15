@@ -84,9 +84,8 @@
         <span style="margin-right: 20px">Get codes on <input type="date" id="filter_date"></span>
         <input style="margin-right: 20px" type="text" id="filter_search_text" placeholder="Search text...">
         <button style="margin-right: 20px" id="filter_element_selector_button">Element Selector</button>
-        <button class="ui-button ui-widget">
-            <span style="display:inline-block" class="ui-icon ui-icon-search" id="filter_search_button"></span>Search
-        </button>
+        <button style="margin-right: 20px" onclick="clearFilters()" id="filter_clear_button">Clear Filters</button>
+        <button onclick="selectPaginationPage(1)" id="filter_search_button">Search</button>
     </div>
     <div id="codes_display_div" style="margin-right:20px;margin-left:20px;z-index: -2">
         <h1>Codes</h1>

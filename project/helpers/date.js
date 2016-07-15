@@ -84,4 +84,4 @@ exports.isDateObjectValid = function (dateObj) {
         // not a date
         return false;
     }
-}
+};
