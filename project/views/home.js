@@ -244,6 +244,10 @@ function createCode() {
                 toastr["warning"]("Code couldn't be inserted\nTry Again... ");
                 console.log("Code couldn't be inserted, Error: " + JSON.stringify(data.Error));
             } else {
+                if (data.redirect) {
+                    // data.redirect contains the string URL to redirect to
+                    window.location.href = data.redirect;
+                }
                 toastCode(data.new_code);
                 console.log("The code id issued is " + data.new_code);
                 if (isOtherCodesRequired) {
