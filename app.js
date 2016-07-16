@@ -1,17 +1,33 @@
 var db = require('./project/db');
 var express = require('express');
 var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
-var cors = require('./project/cors');
+var cors = require('./project/config/cors');
 var favicon = require('serve-favicon');
+var passport = require('./project/config/passport').get();
+var flash = require('connect-flash');
 
 var app = express();
 var port = process.env.PORT || 3000;
 
 app.use(cors());
 
+app.use(cookieParser());
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+app.use(session({
+    secret: 'anystringoftext',
+    saveUninitialized: true,
+    resave: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 app.use(express.static(__dirname + '/project/views'));
@@ -23,6 +39,9 @@ app.use(morgan('dev'));
 app.set('json spaces', 1);
 
 app.use(favicon(__dirname + '/project/public/img/favicon.ico'));
+
+//use for authentication of post requests
+app.use('/', require('./project/controllers/auth'));
 
 app.use('/api/categories', require('./project/controllers/category'));
 app.use('/api/rldcs', require('./project/controllers/rldc'));

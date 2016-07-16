@@ -7,7 +7,7 @@ router.post('/', function (req, res) {
     var rldc_ids = req.body["values[rldc_ids][]"];
     var codes = req.body["values[codes][]"];
     //TODO do the data validation of values array
-    console.log("Optional Code create post request body object is " + JSON.stringify(req.body));
+    //console.log("Optional Code create post request body object is " + JSON.stringify(req.body));
     OptionalCode.create(code_ids, rldc_ids, codes, function (err, numberOfRowsInserted) {
         if (err) {
             res.json({'Error': err});

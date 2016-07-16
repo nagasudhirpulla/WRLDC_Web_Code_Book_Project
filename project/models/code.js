@@ -21,7 +21,7 @@ exports.create = function (cat_id, desc, elem_id, done) {
     var values = [cat_id, desc, elem_id];
     var createdSQLString = "CALL addcode(?, ?, ?)";
     db.get().query(createdSQLString, values, function (err, result) {
-        console.log("create code db result is " + JSON.stringify(result));
+        //console.log("create code db result is " + JSON.stringify(result));
         if (err) return done(err);
         done(null, result[0][0]['newcode']);
     });
@@ -86,7 +86,7 @@ exports.getByFilter = function (searchTxt, searchDate, offset, done) {
         }
     }
     var sql = "SELECT * FROM (SELECT codes.id ,codes.code, codes.time, codes.description, codes.is_cancelled, cats.name AS category, elems.name AS element, GROUP_CONCAT(DISTINCT CONCAT(oc.name, ' ', oc.code) SEPARATOR ', ') AS othercodes, GROUP_CONCAT(DISTINCT crs.name SEPARATOR ', ') AS requestedby, times.time AS codetime FROM codes LEFT OUTER JOIN (SELECT optional_codes.id, optional_codes.code_id, optional_codes.code, rldcs.name FROM optional_codes INNER JOIN rldcs ON rldcs.id = optional_codes.rldc_id) AS oc ON codes.id = oc.code_id LEFT OUTER JOIN (SELECT code_requests.code_id, entities.name FROM code_requests INNER JOIN entities ON code_requests.entity_id = entities.id) AS crs ON codes.id = crs.code_id LEFT OUTER JOIN categories AS cats ON codes.category_id = cats.id LEFT OUTER JOIN elements AS elems ON codes.element_id = elems.id LEFT OUTER JOIN times ON codes.id = times.code_id GROUP BY codes.id ORDER BY codes.time DESC) AS display_table " + whereClause + LimitClause;
-    console.log("sql for filter get is " + sql);
+    //console.log("sql for filter get is " + sql);
     db.get().query(sql, function (err, rows) {
         if (err) return done(err);
         //console.log("The get_by_filter db query result is " + JSON.stringify(rows));
@@ -130,8 +130,8 @@ exports.update = function (record_id, is_cancelled, rldc_ids, rldc_codes, cat, e
         values = values.concat(req_entities_SQL['SQLQueryValues']);
     }
     SQLString += "COMMIT;";
-    console.log("The code update SQL is " + SQLString + "\n");
-    console.log("The code update SQL values are " + values + "\n");
+    //console.log("The code update SQL is " + SQLString + "\n");
+    //console.log("The code update SQL values are " + values + "\n");
     db.get().query(SQLString, values, function (err, result) {
         if (err) return done(err);
         done(null, result);
