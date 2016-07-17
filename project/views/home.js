@@ -680,6 +680,10 @@ function editCode() {
                 toastr["warning"]("Code couldn't be updated\nTry Again... ");
                 console.log("Code couldn't be updated, Error: " + JSON.stringify(data.Error));
             } else {
+                if (data.redirect) {
+                    // data.redirect contains the string URL to redirect to
+                    window.location.href = data.redirect;
+                }
                 $('#edit_dialog').dialog('close');
                 toastr["success"]("Code updated");
                 console.log("The code id updated is " + data["updated_code"]);

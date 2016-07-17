@@ -35,6 +35,11 @@ router.post('/*', isLoggedIn, function (req, res, next) {
     next();
 });
 
+router.put('/*', isLoggedIn, function (req, res, next) {
+    //console.log('caught a put request');
+    next();
+});
+
 function isLoggedIn(req, res, next) {
     console.log("reached isLoggedIn...");
     if (req.isAuthenticated()) {
