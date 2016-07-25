@@ -2,7 +2,7 @@ var mysql = require('mysql')
     , async = require('async');
 
 var PRODUCTION_DB = 'psanodiya'
-    , TEST_DB = 'wrldc_web_code_book_project_test';
+    , TEST_DB = 'psanodiya';
 
 exports.MODE_TEST = 'mode_test';
 exports.MODE_PRODUCTION = 'mode_production';
