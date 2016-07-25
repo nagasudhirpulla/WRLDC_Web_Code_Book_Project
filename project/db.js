@@ -25,7 +25,8 @@ exports.connect = function (mode, done) {
         user: 'psanodiya',
         password: 'pKs@2015',
         database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB,
-        multipleStatements: true
+        multipleStatements: true,
+        connectTimeout: 100000
     });
     state.mode = mode;
     done();
