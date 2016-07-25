@@ -38,7 +38,7 @@ app.use(morgan('dev'));
 
 app.set('json spaces', 1);
 
-app.use(favicon(__dirname + '/project/public/img/favicon.ico'));
+app.use(favicon('https://github.com/nagasudhirpulla/WRLDC_Web_Code_Book_Project/blob/master/project/public/img/favicon.ico'));
 
 //use for authentication of post requests
 app.use('/', require('./project/controllers/auth'));
