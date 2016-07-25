@@ -1,7 +1,7 @@
 var mysql = require('mysql')
     , async = require('async');
 
-var PRODUCTION_DB = 'wrldc_web_code_book_project'
+var PRODUCTION_DB = 'psanodiya'
     , TEST_DB = 'wrldc_web_code_book_project_test';
 
 exports.MODE_TEST = 'mode_test';
@@ -14,9 +14,9 @@ var state = {
 
 exports.connect = function (mode, done) {
     state.pool = mysql.createPool({
-        host: 'localhost',
-        user: 'root',
-        password: '123',
+        host: '182.50.113.86',
+        user: 'psanodiya',
+        password: 'pKs@2015',
         database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB,
         multipleStatements: true
     });
